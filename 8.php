@@ -17,6 +17,18 @@
 	
 	<?php  
 
+	$encryptMe = "thisismyinsecurepassword";
+
+	$hash = "$2y$05$";
+	$salt = "thisneedstobe22characters";
+	$hashSalt = $hash . $salt;
+
+	$encrypted = crypt($encryptMe, $hashSalt);
+
+	echo $encrypted;
+
+
+
 	/*  Step 1 -Make a variable with some text as value
 
 		Step 2 - Use crypt() function to encrypt it
