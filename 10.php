@@ -14,6 +14,28 @@
 	
 	<?php  
 
+	class Dog {
+
+		var $eyes = 2;
+		var $legs = 4;
+		var $nose = 1;
+		var $fur = "brown";
+
+		function ShowAll(){
+
+			echo "Dog has " . $this->eyes . " eyes. <br>";
+			echo "Dog has " . $this->legs . " legs. <br>";
+			echo "Dog has " . $this->nose . " nose. <br>";
+			echo "Dog has " . $this->fur . " fur. <br>";
+
+		}
+
+	}
+
+	$pitbull = new Dog();
+
+	$pitbull->ShowAll();
+
 	/*  Step 1: Use the Make a class called Dog
 
 		Step 2: Set some properties for Dog, Example, eye colors, nose, or fur color
