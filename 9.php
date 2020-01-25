@@ -1,7 +1,19 @@
 <?php include "functions.php" ?>
 <?php include "includes/header.php" ?>
 
+<?php 
 
+session_start();
+
+$_SESSION['message'] = "I did it all for the sessions";
+
+$name = "cookieMonster";
+$value = "I did it all for the cookies";
+$expire = time() + (60*60*24*7);
+
+setcookie($name, $value, $expire);
+
+?>
 
 	<section class="content">
 
@@ -19,6 +31,19 @@
 	
 	<?php 
 
+	if(isset($_GET['id'])) {
+		echo "Got it" . "<br>";
+	}
+
+	if(isset($_COOKIE[$name])){
+		echo $_COOKIE[$name] . "<br>";
+	}
+
+	if(isset($_SESSION['message'])){
+		echo $_SESSION['message'] . "<br>";
+	}
+
+
 	/*  Create a link saying Click Here, and set 
 	the link href to pass some parameters and use the GET super global to see it
 
@@ -29,7 +54,7 @@
 	
 	?>
 
-
+	<a href="9.php?id=42">Click It</a>
 
 
 
