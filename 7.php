@@ -16,7 +16,30 @@
 	
 	
 	
-	<?php  
+	<?php
+
+	$db = mysqli_connect('localhost', 'root', '', 'udemydemo');
+	if (!$db) {
+		die("Database Connection Failed");
+	} else {
+		echo "You are connected" . "<br>";
+	}
+	
+	$query = "select * from users;";
+
+	$result = mysqli_query($db, $query);
+
+	if(!$result){
+		die("No results returned");
+	} else {
+		echo "You've got results!" . "<br>";
+	}
+
+	while($row = mysqli_fetch_assoc($result)){
+		print_r($row);
+	}
+	
+
 
 	/*  Step 1 - Create a database in PHPmyadmin
 
