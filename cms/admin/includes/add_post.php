@@ -10,6 +10,15 @@
         $post_content = $_POST['post-content'];
         $post_tags = $_POST['post-tags'];
         $post_status = $_POST['post-status'];
+            //Escape characters 
+        $post_title = mysqli_real_escape_string($db, $post_title );
+        $post_author = mysqli_real_escape_string($db, $post_author );
+        $post_content = mysqli_real_escape_string($db, $post_content );
+        $post_tags = mysqli_real_escape_string($db, $post_tags );
+            //Strip HTML or allow certain tags
+        $post_title = strip_tags( "$post_title" );
+        $post_author = strip_tags( "$post_author" );
+        $post_tags = strip_tags( "$post_tags", '<em>' );
             //Move images from tmp to perm folder
         move_uploaded_file($post_image_temp, "../images/$post_image");
             //Query to add new posts
