@@ -116,5 +116,156 @@ function deleteCategory() {
 
 
 
+////////// Comment Page functions
+
+function viewAllComments() {
+    //Make connection available outside of function
+    global $db;
+    
+    //Query for all comments data
+    $adm_com_query = "SELECT * FROM com";
+    //Validate query was successful
+    $adm_com_result = mysqli_query($db, $adm_com_query);
+    if(!$adm_com_result){
+        //Display an error message
+        die("Query for comments failed" . mysqli_error($db));
+    }
+    //Dynamically populate post table from DB
+    while($row = mysqli_fetch_assoc($adm_com_result)){
+        $adm_com_id = $row['com_id'];
+        $adm_com_postid = $row['com_post_id'];
+        $adm_com_author = $row['com_author'];
+        $adm_com_email = $row['com_email'];
+        $adm_com_status = $row['com_status'];
+        $adm_com_content = $row['com_content'];
+        $adm_com_date = $row['com_date'];
+        echo "  <tr>
+                    <td>{$adm_com_id}</td>"; 
+                        //Query for all categories data
+                        $post_query = "SELECT * FROM post WHERE post_id = {$adm_com_postid}; ";
+                        //Validate query was successful
+                        $post_result = mysqli_query($db, $post_query);
+                        if(!$post_result){
+                            //Display as error message
+                            die("Query for categories failed" . mysqli_error($db));
+                        }
+                        //Dynamically populate dropdown from DB
+                        while($row = mysqli_fetch_assoc($post_result)){
+                            $post_id = $row['post_id'];
+                            $post_title = $row['post_title'];
+                            echo "<td><a href='../post.php?p_id={$post_id}'>{$post_title}</a></td>";
+                        }
+                    echo "
+                    <td>{$adm_com_author}</td>
+                    <td>{$adm_com_email}</td>
+                    <td>{$adm_com_status}</td>
+                    <td>{$adm_com_content}</td>
+                    <td>{$adm_com_date}</td>
+                    <td><small><a href='./comments.php?delete={$adm_com_id}'>Delete</a></small>|<small><a href='./comments.php?source=edit_comment&c_id={$adm_com_id}'>Edit</a></small>
+                    <br><small><a href='./comments.php?approve={$adm_com_id}'>Approve</a></small>|<small><a href='./comments.php?unapprove={$adm_com_id}'>Unapprove</a></small></td>
+                </tr>";
+    }
+}
+
+function commentOptions(){
+    //Make connection available outside of function
+    global $db;
+
+//Delete 
+    //Validate GET data is received
+    if(isset($_GET['delete'])){
+        $adm_del_id = $_GET['delete'];
+        //Query to delete post ID
+        $adm_del_query = "DELETE FROM com WHERE com_id = $adm_del_id; ";
+        //Validate query was successful
+        $adm_deleted = mysqli_query($db,$adm_del_query);
+        if(!$adm_deleted){
+            //Display an error message
+            die("The comment was not deleted. " . mysqli_error($db));
+        }
+        //Refresh the page to remove post
+        header("Location: comments.php");
+    }
+
+
+// Approve
+    //Validate GET data is received
+    if(isset($_GET['approve'])){
+        $adm_app_id = $_GET['approve'];
+        //Query to delete post ID
+        $adm_app_query = "UPDATE com SET com_status = 'Public' WHERE com_id = $adm_app_id; ";
+        //Validate query was successful
+        $adm_approved = mysqli_query($db,$adm_app_query);
+        if(!$adm_approved){
+            //Display an error message
+            die("The comment was not approved. " . mysqli_error($db));
+        }
+        //Refresh the page to remove post
+        header("Location: comments.php");
+    }
+
+
+// Unapprove
+    //Validate GET data is received
+    if(isset($_GET['unapprove'])){
+        $adm_unapp_id = $_GET['unapprove'];
+        //Query to delete post ID
+        $adm_unapp_query = "UPDATE com SET com_status = 'Moderated' WHERE com_id = $adm_unapp_id; ";
+        //Validate query was successful
+        $adm_unapped = mysqli_query($db,$adm_unapp_query);
+        if(!$adm_unapped){
+            //Display an error message
+            die("The comment was not unapproved. " . mysqli_error($db));
+        }
+        //Refresh the page to remove post
+        header("Location: comments.php");
+    }
+}
+
+function populatePostDropdown() {
+    //Make connection available outside of function
+    global $db;
+
+    //Query for all posts data
+    $post_query = "SELECT * FROM post";
+    //Validate query was successful
+    $post_result = mysqli_query($db, $post_query);
+    if(!$post_result){
+        //Display as error message
+        die("Query for posts failed" . mysqli_error($db));
+    }
+    //Dynamically populate dropdown from DB
+    while($row = mysqli_fetch_assoc($post_result)){
+        $post_id = $row['post_id'];
+        $post_title = $row['post_title'];
+        echo "<option value='{$post_id}'>{$post_title}</option>";
+    }
+}
+
+////////// END Comment Page functions
+
+
+
+
+function populateCatDropdown() {
+    //Make connection available outside of function
+    global $db;
+    
+    //Query for all categories data
+    $cat_query = "SELECT * FROM cat";
+    //Validate query was successful
+    $cat_result = mysqli_query($db, $cat_query);
+    if(!$cat_result){
+        //Display as error message
+        die("Query for categories failed" . mysqli_error($db));
+    }
+    //Dynamically populate dropdown from DB
+    while($row = mysqli_fetch_assoc($cat_result)){
+        $cat_id = $row['cat_id'];
+        $cat_title = $row['cat_title'];
+        echo "<option value='{$cat_id}'>{$cat_title}</option>";
+    }
+}
+
 
 ?>

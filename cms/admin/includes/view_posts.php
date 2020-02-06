@@ -21,7 +21,7 @@
     <tbody>
         <?php 
         //Query for all posts data
-        $adm_post_query = "SELECT * FROM post";
+        $adm_post_query = "SELECT * FROM post ORDER BY post_id DESC";
         //Validate query was successful
         $adm_post_result = mysqli_query($db, $adm_post_query);
         if(!$adm_post_result){
@@ -43,7 +43,7 @@
             echo "  <tr>
                         <td>{$adm_post_id}</td>
                         <td>{$adm_post_author}</td>
-                        <td>{$adm_post_title}</td>";
+                        <td><a href='../post.php?p_id={$adm_post_id}'>{$adm_post_title}</a></td>";
                         //Query for all data from category ID
                         $cat_query = "SELECT * FROM cat WHERE cat_id = {$adm_post_catid} ";
                         //Validate query was successful
@@ -64,7 +64,8 @@
                         <td>{$adm_post_comments}</td>
                         <td>{$adm_post_date}</td>
                         <td>{$adm_post_views}</td>
-                        <td><small><a href='./posts.php?delete={$adm_post_id}'>Delete</a></small>|<small><a href='./posts.php?source=edit_post&p_id={$adm_post_id}'>Edit</a></small></td>
+                        <td><small><a href='./posts.php?delete={$adm_post_id}'>Delete</a></small>|<small><a href='./posts.php?source=edit_post&p_id={$adm_post_id}'>Edit</a></small>
+                        <br><small><a href='./posts.php?approve={$adm_post_id}'>Approve</a></small>|<small><a href='./posts.php?unapprove={$adm_post_id}'>Unapprove</a></small></td>
                     </tr>";
         }
         ?>
@@ -81,6 +82,42 @@
         //Validate query was successful
         $adm_deleted = mysqli_query($db,$adm_del_query);
         if(!$adm_deleted){
+            //Display an error message
+            die("The post was not deleted. " . mysqli_error($db));
+        }
+        //Refresh the page to remove post
+        header("Location: posts.php");
+    }
+?>
+
+<!-- APPROVE Posts -->
+<?php 
+    //Validate GET data is received
+    if(isset($_GET['approve'])){
+        $adm_app_id = $_GET['approve'];
+        //Query to delete post ID
+        $adm_app_query = "UPDATE post SET post_status = 'Publish' WHERE post_id = $adm_app_id; ";
+        //Validate query was successful
+        $adm_approved = mysqli_query($db,$adm_app_query);
+        if(!$adm_approved){
+            //Display an error message
+            die("The post was not deleted. " . mysqli_error($db));
+        }
+        //Refresh the page to remove post
+        header("Location: posts.php");
+    }
+?>
+
+<!-- UNAPPROVE Posts -->
+<?php 
+    //Validate GET data is received
+    if(isset($_GET['unapprove'])){
+        $adm_unapp_id = $_GET['unapprove'];
+        //Query to delete post ID
+        $adm_unapp_query = "UPDATE post SET post_status = 'Draft' WHERE post_id = $adm_unapp_id; ";
+        //Validate query was successful
+        $adm_unapproved = mysqli_query($db,$adm_unapp_query);
+        if(!$adm_unapproved){
             //Display an error message
             die("The post was not deleted. " . mysqli_error($db));
         }

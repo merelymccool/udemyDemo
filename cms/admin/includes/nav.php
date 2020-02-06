@@ -12,20 +12,20 @@
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Mia Marie <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Hello, <?php echo $_SESSION['user_first']; ?> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
+                            <a href="./profile.php?u_id=<?php echo $_SESSION['user_id']; ?>"><i class="fa fa-fw fa-user"></i> Profile</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
+                            <a href="./inbox.php?u_id=<?php echo $_SESSION['user_id']; ?>"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
+                            <a href="./settings.php?u_id=<?php echo $_SESSION['user_id']; ?>"><i class="fa fa-fw fa-gear"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                            <a href="../includes/logout.php"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                         </li>
                     </ul>
                 </li>
@@ -51,21 +51,21 @@
                         <a href="./cat.php"><i class="fa fa-fw fa-bar-chart-o"></i> Categories</a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-fw fa-table"></i> Comments</a>
+                        <a href="./comments.php"><i class="fa fa-fw fa-table"></i> Comments</a>
                     </li>
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Users <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="demo" class="collapse">
                             <li>
-                                <a href="#">View All Users</a>
+                                <a href="./users.php">View All Users</a>
                             </li>
                             <li>
-                                <a href="#">Add New User</a>
+                                <a href="./users.php?source=add_user">Add New User</a>
                             </li>
                         </ul>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-fw fa-file"></i> Profile </a>
+                        <a href="./profile.php?u_id=<?php echo $_SESSION['user_id']; ?>"><i class="fa fa-fw fa-file"></i> Profile </a>
                     </li>
                 </ul>
             </div>

@@ -101,6 +101,15 @@
         $edit_content = $_POST['post-content'];
         $edit_tags = $_POST['post-tags'];
         $edit_status = $_POST['post-status'];
+        //Escape characters 
+        $post_title = mysqli_real_escape_string($db, $edit_title );
+        $edit_author = mysqli_real_escape_string($db, $edit_author );
+        $edit_content = mysqli_real_escape_string($db, $edit_content );
+        $edit_tags = mysqli_real_escape_string($db, $edit_tags );
+        //Strip HTML or allow certain tags
+        $edit_title = strip_tags( "$edit_title" );
+        $edit_author = strip_tags( "$edit_author" );
+        $edit_tags = strip_tags( "$edit_tags", '<em>' );
         //Move images from tmp to perm folder
         move_uploaded_file($edit_image_temp, "../images/$edit_image");
         //Check if image was updated

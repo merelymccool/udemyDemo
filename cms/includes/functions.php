@@ -5,7 +5,9 @@ function showAllPosts() {
         //Make connection available outside of function
     global $db;
         //Query for all post data
-    $post_query = "SELECT * FROM post";
+    $post_query = "SELECT * FROM post
+                    WHERE post_status = 'Publish' 
+                    ORDER BY post_id DESC ";
         //Validate query was successful
     $post_result = mysqli_query($db, $post_query);
     if(!$post_result){

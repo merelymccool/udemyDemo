@@ -46,21 +46,7 @@
     <div class="form-group">
         <label for="post-catid">Category</label><br>
             <select name="post-catid" id="post-catid">
-            <?php 
-                //Query for all categories data
-                $cat_query = "SELECT * FROM cat";
-                //Validate query was successful
-                $cat_result = mysqli_query($db, $cat_query);
-                if(!$cat_result){
-                    //Display as error message
-                    die("Query for categories failed" . mysqli_error($db));
-                }
-                //Dynamically populate dropdown from DB
-                while($row = mysqli_fetch_assoc($cat_result)){
-                    $cat_id = $row['cat_id'];
-                    $cat_title = $row['cat_title'];
-                    echo "<option value='{$cat_id}'>{$cat_title}</option>";
-                }?>
+            <?php populateCatDropdown(); ?>
             </select>
         </label>
     </div>
