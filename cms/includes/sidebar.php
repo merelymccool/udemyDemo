@@ -17,6 +17,20 @@
         <!-- /.input-group -->
     </div>
 
+
+    <?php 
+    if(isset($_SESSION['user_role'])){
+        $name = $_SESSION['user_first']; ?>
+
+    <div class="well">
+        <h4>Welcome, <?php echo $name; ?></h4>
+        <!-- /.input-group -->
+    </div>
+
+
+
+    <?php } else { ?>
+
     <!-- Blog Login Form -->
     <div class="well">
         <h4>Login</h4>
@@ -33,6 +47,9 @@
         </form>
         <!-- /.input-group -->
     </div>
+    
+    
+    <?php } ?>
 
     <!-- Blog Categories Well -->
     <?php sidebarCat(); ?>

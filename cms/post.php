@@ -18,6 +18,8 @@ if(isset($_POST['create_com'])){
     $com_email = mysqli_real_escape_string($db, $com_email );
     $com_content = mysqli_real_escape_string($db, $com_content );
 
+    if(!empty($com_author) && !empty($com_email) && !empty($com_content)){
+
     $add_com_query = "INSERT INTO com (com_post_id, com_author, com_email, com_content, com_status, com_date ) 
                         VALUES ($com_postid, '$com_author', '$com_email', '$com_content', 'Unapproved', now()); ";
 
@@ -34,7 +36,9 @@ if(isset($_POST['create_com'])){
     if(!$update_com_count){
         die("Comment count not updated" . mysqli_error($db));
     }
-
+    } else {
+        echo "<script>alert('Fields must not be empty');</script>";
+    }
     
 }
 

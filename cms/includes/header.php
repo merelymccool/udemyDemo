@@ -2,6 +2,7 @@
 <?php include "db.php"; ?>
 <!-- Call functions -->
 <?php include "functions.php"; ?>
+<?php session_start(); ?>
 
 <!-- Turn on output buffering -->
 <?php ob_start(); ?>

@@ -27,6 +27,63 @@
     }
 ?>
 
+<?php 
+    //Validate POST data is received
+    if(isset($_POST['update'])){
+        $edit_title = $_POST['post-title'];
+        $edit_catid = $_POST['post-catid'];
+        $edit_author = $_POST['post-author'];
+        $edit_date = date('d-m-y');
+        $edit_image = $_FILES['post-image']['name'];
+        $edit_image_temp = $_FILES['post-image']['tmp_name'];
+        $edit_content = $_POST['post-content'];
+        $edit_tags = $_POST['post-tags'];
+        $edit_status = $_POST['post-status'];
+        //Escape characters 
+        $edit_title = mysqli_real_escape_string($db, $edit_title );
+        $edit_author = mysqli_real_escape_string($db, $edit_author );
+        $edit_content = mysqli_real_escape_string($db, $edit_content );
+        $edit_tags = mysqli_real_escape_string($db, $edit_tags );
+        //Strip HTML or allow certain tags
+        $edit_title = strip_tags( "$edit_title" );
+        $edit_author = strip_tags( "$edit_author" );
+        $edit_tags = strip_tags( "$edit_tags", '<em>' );
+        //Move images from tmp to perm folder
+        move_uploaded_file($edit_image_temp, "../images/$edit_image");
+        //Check if image was updated
+        if(empty($edit_image)){
+            $img_query = "SELECT * FROM post WHERE post_id = {$adm_post_id}";
+            $select_image = mysqli_query($db,$img_query);
+            //If no image updated, use image from DB
+            while($row = mysqli_fetch_array($select_image)){
+                $edit_image = $row['post_image'];
+            }
+        }
+        //Query to update post
+        $adm_post_query = "UPDATE post 
+                            SET post_cat_id = {$edit_catid}, 
+                            post_title = '{$edit_title}', 
+                            post_author = '{$edit_author}', 
+                            post_date = now(), 
+                            post_image = '{$edit_image}', 
+                            post_content = '{$edit_content}', 
+                            post_tags = '{$edit_tags}', 
+                            post_status = '{$edit_status}'
+                            WHERE post_id = {$p_id}; ";
+        //Validate query was successful
+        $edit_publish = mysqli_query($db,$adm_post_query);
+        if(!$edit_publish){
+            //Display an error message
+            die("The post was not updated. " . mysqli_error($db));
+        }
+        echo "Successfully updated post. " . "<a href='./posts.php'>View All Posts</a>";
+        
+        //Refresh the page to show updated content
+        // header("Location: posts.php?source=edit_post&p_id={$adm_post_id}");
+
+    }
+?>
+
 <!-- Page title -->
 <h3>Edit Post</h3>
 
@@ -76,69 +133,23 @@
     </div>
     <div class="form-group">
         <label for="post-content">Content</label>
-            <textarea class="form-control" name="post-content" id="" cols="30" rows="10"><?php echo $adm_post_content; ?></textarea>
+            <textarea class="form-control" name="post-content" id="body" cols="30" rows="10"><?php echo $adm_post_content; ?></textarea>
         </label>
     </div>
     <div class="form-group">
-        <label for="post-status">Status</label>
-            <input value="<?php echo $adm_post_status; ?>" type="text" class="form-control" name="post-status">
-        </label>
+        <select name="post-status" id="post-status">
+            <option value=""><?php echo $adm_post_status; ?></option>
+            <?php 
+        if($adm_post_status == 'published'){
+            echo "<option value='draft'>Draft</option>";
+        } else {
+            echo "<option value='published'>Published</option>";
+        }
+        ?>
+        </select>
     </div>
+
     <div class="form-group">
         <input type="submit" class="btn btn-primary" name="update" value="Update">
     </div>
 </form>
-
-<?php 
-    //Validate POST data is received
-    if(isset($_POST['update'])){
-        $edit_title = $_POST['post-title'];
-        $edit_catid = $_POST['post-catid'];
-        $edit_author = $_POST['post-author'];
-        $edit_date = date('d-m-y');
-        $edit_image = $_FILES['post-image']['name'];
-        $edit_image_temp = $_FILES['post-image']['tmp_name'];
-        $edit_content = $_POST['post-content'];
-        $edit_tags = $_POST['post-tags'];
-        $edit_status = $_POST['post-status'];
-        //Escape characters 
-        $post_title = mysqli_real_escape_string($db, $edit_title );
-        $edit_author = mysqli_real_escape_string($db, $edit_author );
-        $edit_content = mysqli_real_escape_string($db, $edit_content );
-        $edit_tags = mysqli_real_escape_string($db, $edit_tags );
-        //Strip HTML or allow certain tags
-        $edit_title = strip_tags( "$edit_title" );
-        $edit_author = strip_tags( "$edit_author" );
-        $edit_tags = strip_tags( "$edit_tags", '<em>' );
-        //Move images from tmp to perm folder
-        move_uploaded_file($edit_image_temp, "../images/$edit_image");
-        //Check if image was updated
-        if(empty($post_image)){
-            $img_query = "SELECT * FROM post WHERE post_id = {$adm_post_id}";
-            $select_image = mysqli_query($db,$img_query);
-            //If no image updated, use image from DB
-            while($row = mysqli_fetch_array($select_image)){
-                $post_image = $row['post_image'];
-            }
-        }
-        //Query to update post
-        $adm_post_query = "UPDATE post 
-                            SET post_cat_id = {$edit_catid}, 
-                            post_title = '{$edit_title}', 
-                            post_author = '{$edit_author}', 
-                            post_date = now(), 
-                            post_image = '{$edit_image}', 
-                            post_content = '{$edit_content}', 
-                            post_tags = '{$edit_tags}', 
-                            post_status = '{$edit_status}'
-                            WHERE post_id = {$p_id}; ";
-        //Validate query was successful
-        $edit_publish = mysqli_query($db,$adm_post_query);
-        if(!$edit_publish){
-            //Display an error message
-            die("The post was not updated. " . mysqli_error($db));
-        }
-        //Refresh the page to show updated content
-        header("Location: posts.php?source=edit_post&p_id={$adm_post_id}");
-    }
-?>

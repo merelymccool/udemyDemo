@@ -40,7 +40,7 @@
     </div>
     <div class="form-group">
         <label for="com-content">Content</label>
-            <textarea class="form-control" name="com-content" id="" cols="30" rows="10"><?php echo $adm_com_content; ?></textarea>
+            <textarea class="form-control" name="com-content" id="body" cols="30" rows="10"><?php echo $adm_com_content; ?></textarea>
         </label>
     </div>
     <div class="form-group">

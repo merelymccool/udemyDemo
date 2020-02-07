@@ -6,7 +6,7 @@ function showAllPosts() {
     global $db;
         //Query for all post data
     $post_query = "SELECT * FROM post
-                    WHERE post_status = 'Publish' 
+                    WHERE post_status = 'published' 
                     ORDER BY post_id DESC ";
         //Validate query was successful
     $post_result = mysqli_query($db, $post_query);
@@ -49,7 +49,10 @@ function showCatPosts() {
     if(isset($_GET['cat'])){
         $post_cat_id = $_GET['cat'];
         //Query for all post data
-    $post_query = "SELECT * FROM post WHERE post_cat_id = $post_cat_id ";
+    $post_query = "SELECT * FROM post 
+                    WHERE post_cat_id = $post_cat_id
+                    AND post_status = 'published' 
+                    ORDER BY post_id DESC ";
         //Validate query was successful
     $post_result = mysqli_query($db, $post_query);
     if(!$post_result){
@@ -73,10 +76,10 @@ function showCatPosts() {
             </p>
             <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date; ?></p>
             <hr>
-            <img class="img-responsive" src="images/<?php echo $post_image; ?>" alt="">
+            <a href="post.php?p_id=<?php echo $post_id; ?>"><img class="img-responsive" src="images/<?php echo $post_image; ?>" alt="<?php echo $post_title; ?>"></a>
             <hr>
             <p><?php echo $post_content; ?></p>
-            <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+            <a class="btn btn-primary" href="post.php?p_id=<?php echo $post_id; ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
             <hr>
 <?php }}} ?>
 
@@ -92,7 +95,7 @@ function showOnePost() {
         $p_id = $_GET['p_id'];
     }
         //Query for all post data
-    $post_query = "SELECT * FROM post WHERE post_id = {$p_id} ";
+    $post_query = "SELECT * FROM post WHERE post_id = {$p_id}";
         //Validate query was successful
     $post_result = mysqli_query($db, $post_query);
     if(!$post_result){
@@ -116,7 +119,6 @@ function showOnePost() {
             <img class="img-responsive" src="images/<?php echo $post_image; ?>" alt="">
             <hr>
             <p><?php echo $post_content; ?></p>
-            <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
             <hr>
 <?php }} ?>
 
@@ -133,7 +135,10 @@ function showSearchPosts() {
         //Assign input to variable
         $search_terms = $_POST['terms'];
         //Query for search terms in post_tags
-        $search_query = "SELECT * FROM post WHERE post_tags LIKE '%$search_terms%';";
+        $search_query = "SELECT * FROM post 
+                            WHERE post_tags LIKE '%$search_terms%'
+                            AND post_status = 'published' 
+                            ORDER BY post_id DESC ";
         //Validate the query was successful
         $search_result = mysqli_query($db,$search_query);
         if(!$search_result){
@@ -156,6 +161,7 @@ function showSearchPosts() {
         }
         //Dynamically populate navbar from DB
         while($row = mysqli_fetch_assoc($post_result)){
+            $post_id = $row['post_id'];
             $post_title = $row['post_title'];
             $post_author = $row['post_author'];
             $post_date = $row['post_date'];
@@ -163,17 +169,17 @@ function showSearchPosts() {
             $post_content = substr($row['post_content'], 0, 250);?>
                 <!-- First Blog Post -->
                 <h2>
-                    <a href="#"><?php echo $post_title; ?></a>
+                    <a href="post.php?p_id=<?php echo $post_id; ?>"><?php echo $post_title; ?></a>
                 </h2>
                 <p class="lead">
                     by <a href="index.php"><?php echo $post_author; ?></a>
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date; ?></p>
                 <hr>
-                <img class="img-responsive" src="images/<?php echo $post_image; ?>" alt="">
+                <a href="post.php?p_id=<?php echo $post_id; ?>"><img class="img-responsive" src="images/<?php echo $post_image; ?>" alt="<?php echo $post_title; ?>"></a>
                 <hr>
                 <p><?php echo $post_content; ?></p>
-                <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+                <a class="btn btn-primary" href="post.php?p_id=<?php echo $post_id; ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
                 <hr>
         <?php }
         } else {

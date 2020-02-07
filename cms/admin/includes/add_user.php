@@ -34,6 +34,8 @@
                 //Display an error message
             die("The user was not created. " . mysqli_error($db));
         }
+
+        echo "User successfully created. " . "<a href='users.php'>View All Users</a>";
     }
 ?>
 

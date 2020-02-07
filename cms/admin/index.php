@@ -9,6 +9,37 @@
         <div id="page-wrapper">
             <div class="container-fluid">
 
+            <?php 
+                    // Count Draft Posts
+            $post_draft_query = "SELECT * FROM post WHERE post_status = 'draft'; ";
+            $post_drafts = mysqli_query($db, $post_draft_query);
+            if(!$post_drafts){
+                die("Posts drafts query failed. " . mysqli_error($db));
+            }
+            $post_draft_count = mysqli_num_rows($post_drafts);
+                    // Count Published Posts
+            $post_pub_query = "SELECT * FROM post WHERE post_status = 'published'; ";
+            $post_pubs = mysqli_query($db, $post_pub_query);
+            if(!$post_pubs){
+                die("Posts published query failed. " . mysqli_error($db));
+            }
+            $post_pub_count = mysqli_num_rows($post_pubs);
+                    // Count Unapproved Comments
+            $com_unapp_query = "SELECT * FROM com WHERE com_status = 'Moderated'; ";
+            $com_unapps = mysqli_query($db, $com_unapp_query);
+            if(!$com_unapps){
+                die("Comments unapproved query failed. " . mysqli_error($db));
+            }
+            $com_unapp_count = mysqli_num_rows($com_unapps);
+                    // Count Approved Comments
+            $com_app_query = "SELECT * FROM com WHERE com_status = 'Public'; ";
+            $com_apps = mysqli_query($db, $com_app_query);
+            if(!$com_apps){
+                die("Comments approved query failed. " . mysqli_error($db));
+            }
+            $com_app_count = mysqli_num_rows($com_apps);
+            ?>
+
                 <!-- Page Heading -->
 
                         <h1 class="page-header">
@@ -156,10 +187,10 @@
 
                                         <?php 
                                         
-                                        $chart_titles = ['Active Posts','Comments','Users','Categories'];
-                                        $chart_counts = [$post_count,$com_count,$user_count,$cat_count];
+                                        $chart_titles = ['All Posts','Published Posts','Draft Posts','All Comments','Approved','Unapproved','Users','Categories'];
+                                        $chart_counts = [$post_count,$post_pub_count,$post_draft_count,$com_count,$com_app_count,$com_unapp_count,$user_count,$cat_count];
                                         
-                                        for( $i=0 ; $i<4 ; $i++ ){
+                                        for( $i=0 ; $i<8 ; $i++ ){
                                             echo "['{$chart_titles[$i]}'" . " , " . "{$chart_counts[$i]}],";
                                         }
                                         ?>

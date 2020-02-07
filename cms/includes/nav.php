@@ -30,7 +30,25 @@
                             echo "<li><a href='category.php?cat={$cat_id}'>$cat_title</a></li>";
                         }
                     ?>
-                    <li><a href="../cms/admin/">Admin</a></li>
+
+                    <?php 
+                    if(isset($_SESSION['user_role'])){
+                        $role = $_SESSION['user_role'];
+
+                        if($role == 'Administrator'){
+                            echo "<li><a href='../cms/admin/'>Admin</a></li>";
+                        }
+                    }
+                    ?>
+
+                    <?php 
+                    if(isset($_SESSION['user_role'])){
+                        if(isset($_GET['p_id'])){
+                            echo $p_id = $_GET['p_id'];
+                            echo "<li><a href='admin/posts.php?source=edit_post&p_id={$p_id}'>Edit</a></li>";
+                        }
+                    }
+                    ?>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

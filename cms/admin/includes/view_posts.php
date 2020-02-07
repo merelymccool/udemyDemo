@@ -1,10 +1,67 @@
+<?php 
+if(isset($_POST['checkBoxArray'])){
+    foreach($_POST['checkBoxArray'] as $checkBoxValue){
+        $bulk_opt = $_POST['bulkOptions'];
+
+        echo $checkBoxValue;
+        switch($bulk_opt) {
+
+            case 'published':
+            $update_query = "UPDATE post SET post_status = '{$bulk_opt}' WHERE post_id = {$checkBoxValue}; ";
+            $bulk_update = mysqli_query($db,$update_query);
+            if(!$bulk_update){
+                die("Update failed. " . mysqli_error($db));
+            }
+            break;
+            case 'draft':
+            $draft_query = "UPDATE post SET post_status = '{$bulk_opt}' WHERE post_id = {$checkBoxValue}; ";
+            $bulk_draft = mysqli_query($db,$draft_query);
+            if(!$bulk_draft){
+                die("Draft failed. " . mysqli_error($db));
+            }
+            break;
+            case 'delete':
+            $delete_query = "DELETE FROM post WHERE post_id = {$checkBoxValue}; ";
+            $bulk_delete = mysqli_query($db,$delete_query);
+            if(!$bulk_delete){
+                die("Delete failed. " . mysqli_error($db));
+            }
+            break;
+        }
+
+    }
+}
+
+
+
+?>
+
+
 <!-- Page title -->
 <h3>View All Posts</h3>
 
+
+<form action="" method="post">
 <!-- Posts table -->
 <table class="table table-bordered table-hover">
+
+<div class="col-xs-6" id="bulkOptionContainer">
+    <select name="bulkOptions" id="" class="form-control">
+        <option value="">Select Options</option>
+        <option value="published">Publish</option>
+        <option value="draft">Draft</option>
+        <option value="delete">Delete</option>
+    </select>
+</div>
+<div class="col-xs-6">
+    <input type="submit" name="submit" class="btn btn-success" value="Apply">
+    <a href="posts.php?source=add_post" class="btn btn-primary">Add New</a>
+</div>
+
+
     <thead>
         <tr>
+            <th><input class='checkBoxes' type='checkbox' id='selectAllCheckbox'></th>
             <th>ID</th>
             <th>Author</th>
             <th>Title</th>
@@ -39,9 +96,14 @@
             $adm_post_tags = $row['post_tags'];
             $adm_post_comments = $row['post_comment_count'];
             $adm_post_date = $row['post_date'];
-            $adm_post_views = $row['post_view_count'];
-            echo "  <tr>
-                        <td>{$adm_post_id}</td>
+            $adm_post_views = $row['post_view_count']; ?>
+
+
+                    <tr>
+                        <td><input class='checkBoxes' type='checkbox' name='checkBoxArray[]' value='<?php echo $adm_post_id ?>'>
+
+
+            <?php echo "<td>{$adm_post_id}</td>
                         <td>{$adm_post_author}</td>
                         <td><a href='../post.php?p_id={$adm_post_id}'>{$adm_post_title}</a></td>";
                         //Query for all data from category ID
@@ -71,6 +133,7 @@
         ?>
     </tbody>
 </table>
+</form>
 
 <!-- DELETE Posts -->
 <?php 

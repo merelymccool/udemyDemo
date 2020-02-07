@@ -30,6 +30,8 @@
                 //Display an error message
             die("The post was not published. " . mysqli_error($db));
         }
+
+        echo "Successfully added post. " . "<a href='./posts.php'>View All Post</a>";
     }
 ?>
 
@@ -67,12 +69,15 @@
     </div>
     <div class="form-group">
         <label for="post-content">Content</label>
-            <textarea class="form-control" name="post-content" id="" cols="30" rows="10"></textarea>
+            <textarea class="form-control" name="post-content" id="body" cols="30" rows="10"></textarea>
         </label>
     </div>
     <div class="form-group">
-        <label for="post-status">Status</label>
-            <input type="text" class="form-control" name="post-status">
+        <select name="post-status" id="">
+        <option value="draft">Post Status</option>
+        <option value="published">Publish</option>
+        <option value="draft">Draft</option>
+        </select>
         </label>
     </div>
     <div class="form-group">
