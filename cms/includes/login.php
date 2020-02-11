@@ -28,6 +28,8 @@ if(isset($_POST['login'])){
         $user_role = $row['user_role'];
         $user_status = $row['user_status'];
     }
+    // Reverse encrypt the password
+    $password = crypt($password,$user_pass);
 
     if($username === $user_name && $password === $user_pass) {
         $_SESSION['user_id'] = $user_id;

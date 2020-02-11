@@ -126,7 +126,7 @@ if(isset($_POST['checkBoxArray'])){
                         <td>{$adm_post_comments}</td>
                         <td>{$adm_post_date}</td>
                         <td>{$adm_post_views}</td>
-                        <td><small><a href='./posts.php?delete={$adm_post_id}'>Delete</a></small>|<small><a href='./posts.php?source=edit_post&p_id={$adm_post_id}'>Edit</a></small>
+                        <td><small><a onClick=\"javascript: return confirm('Are you sure you want to delete this post?'); \" href='./posts.php?delete={$adm_post_id}'>Delete</a></small>|<small><a href='./posts.php?source=edit_post&p_id={$adm_post_id}'>Edit</a></small>
                         <br><small><a href='./posts.php?approve={$adm_post_id}'>Approve</a></small>|<small><a href='./posts.php?unapprove={$adm_post_id}'>Unapprove</a></small></td>
                     </tr>";
         }

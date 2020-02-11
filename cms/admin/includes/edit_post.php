@@ -137,15 +137,16 @@
         </label>
     </div>
     <div class="form-group">
-        <select name="post-status" id="post-status">
-            <option value=""><?php echo $adm_post_status; ?></option>
+        <label for="post-status">Status</label>
+        <select name="post-status" id="">
+            <option value="<?php echo $adm_post_status; ?>"><?php echo $adm_post_status; ?></option>
             <?php 
-        if($adm_post_status == 'published'){
-            echo "<option value='draft'>Draft</option>";
-        } else {
-            echo "<option value='published'>Published</option>";
-        }
-        ?>
+            if($adm_user_role == 'draft'){
+                echo '<option value="published">publish</option>';
+            } else {
+                echo '<option value="draft">draft</option>';
+            }
+            ?>
         </select>
     </div>
 

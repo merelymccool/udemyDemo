@@ -43,6 +43,14 @@
 
                     <?php 
                     if(isset($_SESSION['user_role'])){
+                        
+                        } else {
+                            echo "<li><a href='register.php'>Register</a></li>";
+                    }
+                    ?>
+
+                    <?php 
+                    if(isset($_SESSION['user_role'])){
                         if(isset($_GET['p_id'])){
                             echo $p_id = $_GET['p_id'];
                             echo "<li><a href='admin/posts.php?source=edit_post&p_id={$p_id}'>Edit</a></li>";

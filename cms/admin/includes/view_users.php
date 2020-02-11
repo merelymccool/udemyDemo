@@ -48,9 +48,10 @@
                         <td><img width=100 src='../avatars/{$adm_user_image}' alt='{$adm_user_name}'></td>
                         <td>{$adm_user_date}</td>
                         <td>{$adm_user_status}</td>
-                        <td><small><a href='./users.php?delete={$adm_user_id}'>Delete</a></small>|<small><a href='./users.php?source=edit_user&u_id={$adm_user_id}'>Edit</a></small>
+                        <td><small><a onClick=\"javascript: return confirm('Are you sure you want to delete this user?'); \" href='./users.php?delete={$adm_user_id}'>Delete</a></small>|<small><a href='./users.php?source=edit_user&u_id={$adm_user_id}'>Edit</a></small>
                         <br><small><a href='./users.php?adm={$adm_user_id}'>Promote</a></small>|<small><a href='./users.php?reg={$adm_user_id}'>Demote</a></small>
                         <br><small><a href='./users.php?approve={$adm_user_id}'>Approve</a></small>|<small><a href='./users.php?unapprove={$adm_user_id}'>Unapprove</a></small></td>
+
                     </tr>";
         }
         ?>

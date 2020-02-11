@@ -27,7 +27,7 @@ function showAllPosts() {
                 <a href="post.php?p_id=<?php echo $post_id; ?>"><?php echo $post_title; ?></a>
             </h2>
             <p class="lead">
-                by <a href="index.php"><?php echo $post_author; ?></a>
+                by <a href="author.php?a_id=<?php echo $post_author; ?>"><?php echo $post_author; ?></a>
             </p>
             <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date; ?></p>
             <hr>
@@ -38,6 +38,46 @@ function showAllPosts() {
             <hr>
 <?php }} ?>
 
+<?php
+function showAuthorPosts() {
+        //Make connection available outside of function
+    global $db;
+
+    if(isset($_GET['a_id'])){
+        $a_id = $_GET['a_id'];
+        //Query for all post data
+    $post_query = "SELECT * FROM post
+                    WHERE post_author = '{$a_id}' 
+                    ORDER BY post_id DESC ";
+        //Validate query was successful
+    $post_result = mysqli_query($db, $post_query);
+    if(!$post_result){
+        //Display as error message
+        die("Query for posts failed. " . mysqli_error($db));
+    }
+        //Dynamically populate navbar from DB
+    while($row = mysqli_fetch_assoc($post_result)){
+        $post_id = $row['post_id'];
+        $post_title = $row['post_title'];
+        $post_author = $row['post_author'];
+        $post_date = $row['post_date'];
+        $post_image = $row['post_image'];
+        $post_content = substr($row['post_content'], 0, 250); ?>
+            <!-- Blog Post -->
+            <h2>
+                <a href="post.php?p_id=<?php echo $post_id; ?>"><?php echo $post_title; ?></a>
+            </h2>
+            <p class="lead">
+                by <a href="author.php?a_id=<?php echo $post_author; ?>"><?php echo $post_author; ?></a>
+            </p>
+            <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date; ?></p>
+            <hr>
+            <a href="post.php?p_id=<?php echo $post_id; ?>"><img class="img-responsive" src="images/<?php echo $post_image; ?>" alt="<?php echo $post_title; ?>"></a>
+            <hr>
+            <p><?php echo $post_content; ?></p>
+            <a class="btn btn-primary" href="post.php?p_id=<?php echo $post_id; ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+            <hr>
+<?php }}} ?>
 
 
 <?php
@@ -72,7 +112,7 @@ function showCatPosts() {
                 <a href="post.php?p_id=<?php echo $post_id; ?>"><?php echo $post_title; ?></a>
             </h2>
             <p class="lead">
-                by <a href="index.php"><?php echo $post_author; ?></a>
+                by <a href="author.php?a_id=<?php echo $post_author; ?>"><?php echo $post_author; ?></a>
             </p>
             <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date; ?></p>
             <hr>
@@ -113,7 +153,7 @@ function showOnePost() {
             <h1 class="page-header">
             <?php echo $post_title; ?>
             </h1>
-            <h2><small>by <a href="index.php"><?php echo $post_author; ?></a></small></h2>
+            <h2><small>by <a href="author.php?a_id=<?php echo $post_author; ?>"><?php echo $post_author; ?></a></small></h2>
             <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date; ?></p>
             <hr>
             <img class="img-responsive" src="images/<?php echo $post_image; ?>" alt="">
@@ -172,7 +212,7 @@ function showSearchPosts() {
                     <a href="post.php?p_id=<?php echo $post_id; ?>"><?php echo $post_title; ?></a>
                 </h2>
                 <p class="lead">
-                    by <a href="index.php"><?php echo $post_author; ?></a>
+                    by <a href="author.php?a_id=<?php echo $post_author; ?>"><?php echo $post_author; ?></a>
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date; ?></p>
                 <hr>
@@ -202,7 +242,7 @@ function showSearchPosts() {
                     <a href="#"><?php echo $post_title; ?></a>
                 </h2>
                 <p class="lead">
-                    by <a href="index.php"><?php echo $post_author; ?></a>
+                    by <a href="author.php?a_id=<?php echo $post_author; ?>"><?php echo $post_author; ?></a>
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date; ?></p>
                 <hr>
