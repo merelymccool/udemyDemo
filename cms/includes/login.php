@@ -28,10 +28,9 @@ if(isset($_POST['login'])){
         $user_role = $row['user_role'];
         $user_status = $row['user_status'];
     }
-    // Reverse encrypt the password
-    $password = crypt($password,$user_pass);
 
-    if($username === $user_name && $password === $user_pass) {
+    if(password_verify($password, $user_pass)){
+
         $_SESSION['user_id'] = $user_id;
         $_SESSION['user_name'] = $user_name;
         $_SESSION['user_pass'] = $user_pass;
@@ -43,10 +42,28 @@ if(isset($_POST['login'])){
         $_SESSION['user_status'] = $user_status;
 
         header('Location: ../admin');
-    } else {
+    }
+    
+    // Reverse encrypt the password
+    // $password = crypt($password,$user_pass);
+
+    // if($username === $user_name && $password === $user_pass) {
+    //     $_SESSION['user_id'] = $user_id;
+    //     $_SESSION['user_name'] = $user_name;
+    //     $_SESSION['user_pass'] = $user_pass;
+    //     $_SESSION['user_first'] = $user_first;
+    //     $_SESSION['user_last'] = $user_last;
+    //     $_SESSION['user_email'] = $user_email;
+    //     $_SESSION['user_image'] = $user_image;
+    //     $_SESSION['user_role'] = $user_role;
+    //     $_SESSION['user_status'] = $user_status;
+
+    //     header('Location: ../admin');
+    // } 
+    
+    else {
         header('Location: ../index.php');
     }
-
 
     
 }

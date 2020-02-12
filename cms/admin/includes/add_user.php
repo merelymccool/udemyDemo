@@ -17,12 +17,8 @@
         $user_pass = mysqli_real_escape_string($db, $user_pass );
         $user_first = mysqli_real_escape_string($db, $user_first );
         $user_last = mysqli_real_escape_string($db, $user_last );
-            //Strip HTML or allow certain tags
-        $user_name = strip_tags( "$user_name" );
-        $user_email = strip_tags( "$user_email" );
-        $user_pass = strip_tags( "$user_pass" );
-        $user_first = strip_tags( "$user_first" );
-        $user_last = strip_tags( "$user_last" );
+            //Hash password
+        $user_pass = password_hash($user_pass, PASSWORD_BCRYPT, array('cost' => 10));
             //Move images from tmp to perm folder
         move_uploaded_file($user_image_temp, "../avatars/$user_image");
             //Query to add new posts
@@ -85,6 +81,6 @@
         </label>
     </div>
     <div class="form-group">
-        <input type="submit" class="btn btn-primary" name="create" value="Publish">
+        <input type="submit" class="btn btn-primary" name="create" value="Create">
     </div>
 </form>

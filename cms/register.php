@@ -11,15 +11,17 @@ if(isset($_POST['register'])){
     $email = mysqli_real_escape_string($db,$email);
     $password = mysqli_real_escape_string($db,$password);
 
-    $salt_query = "SELECT randSalt FROM user; ";
-    $salt_result = mysqli_query($db,$salt_query);
-    if(!$salt_result){
-        die("No salt for you. " . mysqli_error($db));
-    }
-    $row = mysqli_fetch_array($salt_result);
-    $salt = $row['randSalt'];
+    $password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
 
-    $password = crypt($password,$salt);
+    // $salt_query = "SELECT randSalt FROM user; ";
+    // $salt_result = mysqli_query($db,$salt_query);
+    // if(!$salt_result){
+    //     die("No salt for you. " . mysqli_error($db));
+    // }
+    // $row = mysqli_fetch_array($salt_result);
+    // $salt = $row['randSalt'];
+
+    // $password = crypt($password,$salt);
 
     if(!empty($username) && !empty($email) && !empty($password)){
     $create_user_query = "INSERT INTO user (user_name,user_email,user_pass,user_role,user_status,user_date) 

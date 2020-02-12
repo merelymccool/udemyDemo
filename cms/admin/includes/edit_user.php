@@ -43,16 +43,8 @@
         $user_pass = mysqli_real_escape_string($db, $user_pass );
         $user_first = mysqli_real_escape_string($db, $user_first );
         $user_last = mysqli_real_escape_string($db, $user_last );
-        //Salt the password
-        $salt_query = "SELECT randSalt FROM user; ";
-        $salt_result = mysqli_query($db,$salt_query);
-        if(!$salt_result){
-            die("No salt for you. " . mysqli_error($db));
-        }
-        $row = mysqli_fetch_array($salt_result);
-        $salt = $row['randSalt'];
-
-        $hash_pass = crypt($user_pass,$salt);
+        //Hash password
+        $user_pass = password_hash($user_pass, PASSWORD_BCRYPT, array('cost' => 10));
         //Move images from tmp to perm folder
         move_uploaded_file($user_image_temp, "../avatars/$user_image");
         //Check if image was updated
@@ -68,7 +60,7 @@
         $adm_com_query = "UPDATE user 
                             SET user_name = '{$user_name}', 
                             user_email = '{$user_email}', 
-                            user_pass = '{$hash_pass}',
+                            user_pass = '{$user_pass}',
                             user_first = '{$user_first}', 
                             user_last = '{$user_last}', 
                             user_date = now(),
