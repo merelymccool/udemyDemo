@@ -1,8 +1,9 @@
 <?php 
     //Validate GET data is received
     if(isset($_GET['c_id'])){
-        $c_id = $_GET['c_id'];
-    }
+        if($_SESSION['user_role'] == 'Administrator'){
+        $c_id = escape($_GET['c_id']);
+    
     //Query for all post data
     $adm_editid_query = "SELECT * FROM com WHERE com_id = {$c_id}";
     //Validate query was successful
@@ -21,6 +22,7 @@
         $adm_com_content = $row['com_content'];
         $adm_com_date = $row['com_date'];
     }
+}}
 ?>
 
 <!-- Page title -->
@@ -63,15 +65,11 @@
 <?php 
     //Validate POST data is received
     if(isset($_POST['update'])){
-        $edit_author = $_POST['com-author'];
-        $edit_email = $_POST['com-email'];
-        $edit_content = $_POST['com-content'];
-        $edit_postid = $_POST['com-postid'];
-        $edit_status = $_POST['com-status'];
-        //Escape characters
-        $edit_email = mysqli_real_escape_string($db, $edit_email );
-        $edit_author = mysqli_real_escape_string($db, $edit_author );
-        $edit_content = mysqli_real_escape_string($db, $edit_content );
+        $edit_author = escape($_POST['com-author']);
+        $edit_email = escape($_POST['com-email']);
+        $edit_content = escape($_POST['com-content']);
+        $edit_postid = escape($_POST['com-postid']);
+        $edit_status = escape($_POST['com-status']);
         //Query to update comment
         $adm_com_query = "UPDATE com 
                             SET com_author = '{$edit_author}', 

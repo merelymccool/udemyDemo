@@ -1,8 +1,9 @@
 <?php 
     //Validate GET data is received
     if(isset($_GET['p_id'])){
-        $p_id = $_GET['p_id'];
-    }
+        if($_SESSION['user_role'] == 'Administrator'){
+        $p_id = escape($_GET['p_id']);
+    
     //Query for all post data
     $adm_editid_query = "SELECT * FROM post WHERE post_id = {$p_id}";
     //Validate query was successful
@@ -25,25 +26,21 @@
         $adm_post_date = $row['post_date'];
         $adm_post_views = $row['post_view_count'];
     }
+}}
 ?>
 
 <?php 
     //Validate POST data is received
     if(isset($_POST['update'])){
-        $edit_title = $_POST['post-title'];
-        $edit_catid = $_POST['post-catid'];
-        $edit_author = $_POST['post-author'];
+        $edit_title = escape($_POST['post-title']);
+        $edit_catid = escape($_POST['post-catid']);
+        $edit_author = escape($_POST['post-author']);
         $edit_date = date('d-m-y');
         $edit_image = $_FILES['post-image']['name'];
         $edit_image_temp = $_FILES['post-image']['tmp_name'];
-        $edit_content = $_POST['post-content'];
-        $edit_tags = $_POST['post-tags'];
-        $edit_status = $_POST['post-status'];
-        //Escape characters 
-        $edit_title = mysqli_real_escape_string($db, $edit_title );
-        $edit_author = mysqli_real_escape_string($db, $edit_author );
-        $edit_content = mysqli_real_escape_string($db, $edit_content );
-        $edit_tags = mysqli_real_escape_string($db, $edit_tags );
+        $edit_content = escape($_POST['post-content']);
+        $edit_tags = escape($_POST['post-tags']);
+        $edit_status = escape($_POST['post-status']);
         //Strip HTML or allow certain tags
         $edit_title = strip_tags( "$edit_title" );
         $edit_author = strip_tags( "$edit_author" );

@@ -1,8 +1,9 @@
 <?php 
     //Validate GET data is received
     if(isset($_GET['u_id'])){
-        $u_id = $_GET['u_id'];
-    }
+        if($_SESSION['user_role'] == 'Administrator'){
+        $u_id = escape($_GET['u_id']);
+    
     //Query for all post data
     $adm_editid_query = "SELECT * FROM user WHERE user_id = {$u_id}";
     //Validate query was successful
@@ -24,25 +25,20 @@
         $adm_user_date = $row['user_date'];
         $adm_user_status = $row['user_status'];
     }
+}}
 
         //Validate POST data is received
     if(isset($_POST['update'])){
-        $user_name = $_POST['user-name'];
-        $user_email = $_POST['user-email'];
-        $user_pass = $_POST['user-pass'];
-        $user_first = $_POST['user-first'];
-        $user_last = $_POST['user-last'];
+        $user_name = escape($_POST['user-name']);
+        $user_email = escape($_POST['user-email']);
+        $user_pass = escape($_POST['user-pass']);
+        $user_first = escape($_POST['user-first']);
+        $user_last = escape($_POST['user-last']);
         $user_date = date('d-m-y');
         $user_image = $_FILES['user-image']['name'];
         $user_image_temp = $_FILES['user-image']['tmp_name'];
-        $user_role = $_POST['user-role'];
-        $user_status = $_POST['user-status'];
-            //Escape characters 
-        $user_name = mysqli_real_escape_string($db, $user_name );
-        $user_email = mysqli_real_escape_string($db, $user_email );
-        $user_pass = mysqli_real_escape_string($db, $user_pass );
-        $user_first = mysqli_real_escape_string($db, $user_first );
-        $user_last = mysqli_real_escape_string($db, $user_last );
+        $user_role = escape($_POST['user-role']);
+        $user_status = escape($_POST['user-status']);
         //Hash password
         $user_pass = password_hash($user_pass, PASSWORD_BCRYPT, array('cost' => 10));
         //Move images from tmp to perm folder

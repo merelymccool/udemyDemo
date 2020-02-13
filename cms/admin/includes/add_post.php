@@ -1,20 +1,15 @@
 <?php 
         //Validate POST data is received
     if(isset($_POST['publish'])){
-        $post_title = $_POST['post-title'];
-        $post_catid = $_POST['post-catid'];
-        $post_author = $_POST['post-author'];
+        $post_title = escape($_POST['post-title']);
+        $post_catid = escape($_POST['post-catid']);
+        $post_author = escape($_POST['post-author']);
         $post_date = date('d-m-y');
         $post_image = $_FILES['post-image']['name'];
         $post_image_temp = $_FILES['post-image']['tmp_name'];
-        $post_content = $_POST['post-content'];
-        $post_tags = $_POST['post-tags'];
-        $post_status = $_POST['post-status'];
-            //Escape characters 
-        $post_title = mysqli_real_escape_string($db, $post_title );
-        $post_author = mysqli_real_escape_string($db, $post_author );
-        $post_content = mysqli_real_escape_string($db, $post_content );
-        $post_tags = mysqli_real_escape_string($db, $post_tags );
+        $post_content = escape($_POST['post-content']);
+        $post_tags = escape($_POST['post-tags']);
+        $post_status = escape($_POST['post-status']);
             //Strip HTML or allow certain tags
         $post_title = strip_tags( "$post_title" );
         $post_author = strip_tags( "$post_author" );

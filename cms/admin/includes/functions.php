@@ -1,5 +1,10 @@
 <?php
 
+function escape($str){
+    global $db;
+    return mysqli_real_escape_string($db,trim($str));
+}
+
 
 ////////// Category Page functions
 
@@ -8,7 +13,8 @@ function createCategory() {
     global $db;
     //Verify POST data is received
     if(isset($_POST['submit'])){
-        $adm_cat = $_POST['cat_title'];
+        if($_SESSION['user_role'] == 'Administrator'){
+        $adm_cat = escape($_POST['cat_title']);
         //Validate POST data is not empty
         if($adm_cat == "" || empty($adm_cat)){
             //Display an error message
@@ -24,7 +30,7 @@ function createCategory() {
             die("Failed to create new Category. " . mysqli_error($db));
         }
         }
-    }
+    }}
 }
 
 function readCategory() {
@@ -62,12 +68,13 @@ function updateCategory() {
     global $db;
     //Verify GET data is received
     if(isset($_GET['edit'])){
-        $cat_id = $_GET['edit'];
+        if($_SESSION['user_role'] == 'Administrator'){
+        $cat_id = escape($_GET['edit']);
         include "includes/update_cat.php";
     } 
     //Verify POST data is received
     if(isset($_POST['update'])){
-        $adm_cat_upd = $_POST['cat_title'];
+        $adm_cat_upd = escape($_POST['cat_title']);
         //Validate POST data is not empty
         if(empty($adm_cat_upd)){
             //Display an error message
@@ -84,7 +91,7 @@ function updateCategory() {
         //Refresh the page to clear Update form
         header("Location: cat.php");
         }
-    }
+    }}
 }
 
 function deleteCategory() {
@@ -92,7 +99,8 @@ function deleteCategory() {
     global $db;
     //Verify GET data is received
     if(isset($_GET['delete'])){
-        $adm_cat_del = $_GET['delete'];
+        if($_SESSION['user_role'] == 'Administrator'){
+        $adm_cat_del = escape($_GET['delete']);
         //Validate GET data is not empty
         if(empty($adm_cat_del)){
             //Display an error message
@@ -109,7 +117,7 @@ function deleteCategory() {
         //Refresh the page to remove deleted category
         header("Location: cat.php");
         }
-    }
+    }}
 }
 
 ////////// END Category Page functions
@@ -174,7 +182,8 @@ function commentOptions(){
 //Delete 
     //Validate GET data is received
     if(isset($_GET['delete'])){
-        $adm_del_id = $_GET['delete'];
+        if($_SESSION['user_role'] == 'Administrator'){
+        $adm_del_id = escape($_GET['delete']);
         //Query to delete post ID
         $adm_del_query = "DELETE FROM com WHERE com_id = $adm_del_id; ";
         //Validate query was successful
@@ -185,13 +194,14 @@ function commentOptions(){
         }
         //Refresh the page to remove post
         header("Location: comments.php");
-    }
+    }}
 
 
 // Approve
     //Validate GET data is received
     if(isset($_GET['approve'])){
-        $adm_app_id = $_GET['approve'];
+        if($_SESSION['user_role'] == 'Administrator'){
+        $adm_app_id = escape($_GET['approve']);
         //Query to delete post ID
         $adm_app_query = "UPDATE com SET com_status = 'Public' WHERE com_id = $adm_app_id; ";
         //Validate query was successful
@@ -202,13 +212,14 @@ function commentOptions(){
         }
         //Refresh the page to remove post
         header("Location: comments.php");
-    }
+    }}
 
 
 // Unapprove
     //Validate GET data is received
     if(isset($_GET['unapprove'])){
-        $adm_unapp_id = $_GET['unapprove'];
+        if($_SESSION['user_role'] == 'Administrator'){
+        $adm_unapp_id = escape($_GET['unapprove']);
         //Query to delete post ID
         $adm_unapp_query = "UPDATE com SET com_status = 'Moderated' WHERE com_id = $adm_unapp_id; ";
         //Validate query was successful
@@ -219,7 +230,7 @@ function commentOptions(){
         }
         //Refresh the page to remove post
         header("Location: comments.php");
-    }
+    }}
 }
 
 function populatePostDropdown() {

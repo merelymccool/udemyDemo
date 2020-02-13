@@ -58,11 +58,15 @@
     </tbody>
 </table>
 
-<!-- DELETE Posts -->
+<!-- DELETE Users -->
 <?php 
     //Validate GET data is received
     if(isset($_GET['delete'])){
-        $adm_del_id = $_GET['delete'];
+
+        if($_SESSION['user_role'] == 'Administrator'){
+
+        $adm_del_id = mysqli_real_escape_string($db, $_GET['delete']);
+        
         //Query to delete post ID
         $adm_del_query = "DELETE FROM user WHERE user_id = $adm_del_id; ";
         //Validate query was successful
@@ -73,10 +77,10 @@
         }
         //Refresh the page to remove post
         header("Location: users.php");
-    }
+    }}
 ?>
 
-<!-- APPROVE Posts -->
+<!-- APPROVE Users -->
 <?php 
     //Validate GET data is received
     if(isset($_GET['approve'])){
@@ -94,7 +98,7 @@
     }
 ?>
 
-<!-- UNAPPROVE Posts -->
+<!-- UNAPPROVE Users -->
 <?php 
     //Validate GET data is received
     if(isset($_GET['unapprove'])){
@@ -112,7 +116,7 @@
     }
 ?>
 
-<!-- PROMOTE Posts -->
+<!-- PROMOTE Users -->
 <?php 
     //Validate GET data is received
     if(isset($_GET['adm'])){
@@ -130,7 +134,7 @@
     }
 ?>
 
-<!-- DEMOTE Posts -->
+<!-- DEMOTE Users -->
 <?php 
     //Validate GET data is received
     if(isset($_GET['reg'])){

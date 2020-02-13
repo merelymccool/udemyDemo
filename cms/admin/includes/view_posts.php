@@ -1,9 +1,8 @@
 <?php 
 if(isset($_POST['checkBoxArray'])){
     foreach($_POST['checkBoxArray'] as $checkBoxValue){
-        $bulk_opt = $_POST['bulkOptions'];
-
-        echo $checkBoxValue;
+        $bulk_opt = escape($_POST['bulkOptions']);
+        
         switch($bulk_opt) {
 
             case 'published':
@@ -149,7 +148,8 @@ if(isset($_POST['checkBoxArray'])){
 <?php 
     //Validate GET data is received
     if(isset($_GET['delete'])){
-        $adm_del_id = $_GET['delete'];
+        if($_SESSION['user_role'] == 'Administrator'){
+        $adm_del_id = escape($_GET['delete']);
         //Query to delete post ID
         $adm_del_query = "DELETE FROM post WHERE post_id = $adm_del_id; ";
         //Validate query was successful
@@ -160,14 +160,15 @@ if(isset($_POST['checkBoxArray'])){
         }
         //Refresh the page to remove post
         header("Location: posts.php");
-    }
+    }}
 ?>
 
 <!-- APPROVE Posts -->
 <?php 
     //Validate GET data is received
     if(isset($_GET['approve'])){
-        $adm_app_id = $_GET['approve'];
+        if($_SESSION['user_role'] == 'Administrator'){
+        $adm_app_id = escape($_GET['approve']);
         //Query to delete post ID
         $adm_app_query = "UPDATE post SET post_status = 'published' WHERE post_id = $adm_app_id; ";
         //Validate query was successful
@@ -178,14 +179,15 @@ if(isset($_POST['checkBoxArray'])){
         }
         //Refresh the page to remove post
         header("Location: posts.php");
-    }
+    }}
 ?>
 
 <!-- UNAPPROVE Posts -->
 <?php 
     //Validate GET data is received
     if(isset($_GET['unapprove'])){
-        $adm_unapp_id = $_GET['unapprove'];
+        if($_SESSION['user_role'] == 'Administrator'){
+        $adm_unapp_id = escape($_GET['unapprove']);
         //Query to delete post ID
         $adm_unapp_query = "UPDATE post SET post_status = 'draft' WHERE post_id = $adm_unapp_id; ";
         //Validate query was successful
@@ -196,5 +198,5 @@ if(isset($_POST['checkBoxArray'])){
         }
         //Refresh the page to remove post
         header("Location: posts.php");
-    }
+    }}
 ?>
