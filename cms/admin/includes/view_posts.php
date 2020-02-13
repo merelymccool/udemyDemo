@@ -124,7 +124,6 @@ if(isset($_POST['checkBoxArray'])){
                         <td><img width='100' src='../images/{$adm_post_image}' alt={$adm_post_title}></td>
                         <td>{$adm_post_tags}</td>"; ?>
             <?php 
-            
             $comment_count_query = "SELECT * FROM com WHERE com_post_id = $adm_post_id ";
             $comment_count = mysqli_query($db,$comment_count_query);
             if(!$comment_count){
@@ -134,10 +133,7 @@ if(isset($_POST['checkBoxArray'])){
             $cp_id = $row['com_post_id'];
             $com_total = mysqli_num_rows($comment_count);
             ?>
-
                         <td><?php echo $com_total; ?></td>
-
-
             <?php echo  "<td>{$adm_post_date}</td>
                         <td>{$adm_post_views}</td>
                         <td><small><a onClick=\"javascript: return confirm('Are you sure you want to delete this post?'); \" href='./posts.php?delete={$adm_post_id}'>Delete</a></small>|<small><a href='./posts.php?source=edit_post&p_id={$adm_post_id}'>Edit</a></small>
@@ -173,7 +169,7 @@ if(isset($_POST['checkBoxArray'])){
     if(isset($_GET['approve'])){
         $adm_app_id = $_GET['approve'];
         //Query to delete post ID
-        $adm_app_query = "UPDATE post SET post_status = 'Publish' WHERE post_id = $adm_app_id; ";
+        $adm_app_query = "UPDATE post SET post_status = 'published' WHERE post_id = $adm_app_id; ";
         //Validate query was successful
         $adm_approved = mysqli_query($db,$adm_app_query);
         if(!$adm_approved){
@@ -191,7 +187,7 @@ if(isset($_POST['checkBoxArray'])){
     if(isset($_GET['unapprove'])){
         $adm_unapp_id = $_GET['unapprove'];
         //Query to delete post ID
-        $adm_unapp_query = "UPDATE post SET post_status = 'Draft' WHERE post_id = $adm_unapp_id; ";
+        $adm_unapp_query = "UPDATE post SET post_status = 'draft' WHERE post_id = $adm_unapp_id; ";
         //Validate query was successful
         $adm_unapproved = mysqli_query($db,$adm_unapp_query);
         if(!$adm_unapproved){

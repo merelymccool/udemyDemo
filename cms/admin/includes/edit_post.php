@@ -115,11 +115,21 @@
             </select>
         </label>
     </div>
-    <div class="form-group">
+    <!-- <div class="form-group">
         <label for="post-author">Author</label>
             <input value="<?php echo $adm_post_author; ?>" type="text" class="form-control" name="post-author">
         </label>
+    </div> -->
+
+    <div class="form-group">
+        <label for="post-author">Author</label><br>
+            <select name="post-author" id="post-author">
+            <option value="<?php echo $adm_post_author; ?>"><?php echo $adm_post_author; ?></option>
+            <?php populateAuthorDropdown(); ?>
+            </select>
+        </label>
     </div>
+
     <div class="form-group">
         <label for="post-image">Image</label>
             <img width="200" src="../images/<?php echo $adm_post_image; ?>" alt="<?php echo $adm_post_title; ?>">
@@ -141,7 +151,7 @@
         <select name="post-status" id="">
             <option value="<?php echo $adm_post_status; ?>"><?php echo $adm_post_status; ?></option>
             <?php 
-            if($adm_user_role == 'draft'){
+            if($adm_post_status == 'draft'){
                 echo '<option value="published">publish</option>';
             } else {
                 echo '<option value="draft">draft</option>';

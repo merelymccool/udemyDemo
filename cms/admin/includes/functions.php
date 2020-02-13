@@ -267,5 +267,25 @@ function populateCatDropdown() {
     }
 }
 
+function populateAuthorDropdown() {
+    //Make connection available outside of function
+    global $db;
+    
+    //Query for all categories data
+    $user_query = "SELECT * FROM user";
+    //Validate query was successful
+    $user_result = mysqli_query($db, $user_query);
+    if(!$user_result){
+        //Display as error message
+        die("Query for categories failed" . mysqli_error($db));
+    }
+    //Dynamically populate dropdown from DB
+    while($row = mysqli_fetch_assoc($user_result)){
+        // $user_id = $row['user_id'];
+        $user_name = $row['user_name'];
+        echo "<option value='{$user_name}'>{$user_name}</option>";
+    }
+}
+
 
 ?>

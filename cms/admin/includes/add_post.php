@@ -53,10 +53,17 @@
         </label>
     </div>
     <div class="form-group">
+        <label for="post-author">Author</label><br>
+            <select name="post-author" id="post-author">
+            <?php populateAuthorDropdown(); ?>
+            </select>
+        </label>
+    </div>
+    <!-- <div class="form-group">
         <label for="post-author">Author</label>
             <input type="text" class="form-control" name="post-author">
         </label>
-    </div>
+    </div> -->
     <div class="form-group">
         <label for="post-tags">Tags</label>
             <input type="text" class="form-control" name="post-tags">
