@@ -5,7 +5,7 @@
 
 if(isset($_SESSION['user_name'])){
 
-    $username = $_SESSION['user_name'];
+    $username = escape($_SESSION['user_name']);
 
     $profile_query = "SELECT * FROM user WHERE user_name = '{$username}'; ";
     $select_profile = mysqli_query($db, $profile_query);
@@ -61,7 +61,7 @@ if(isset($_SESSION['user_name'])){
                                 </div>
                                 <div class="form-group">
                                     <label for="user-pass">Password</label>
-                                        <input value="<?php echo $user_pass; ?>" type="text" class="form-control" name="user-pass">
+                                        <input value="<?php echo $user_pass; ?>" type="password" class="form-control" name="user-pass">
                                     </label>
                                 </div>
                                 <div class="form-group">
@@ -108,28 +108,24 @@ if(isset($_SESSION['user_name'])){
 <?php 
     //Validate POST data is received
     if(isset($_POST['update'])){
-        $pro_user_name = $_POST['user-name'];
-        $pro_user_email = $_POST['user-email'];
-        $pro_user_pass = $_POST['user-pass'];
-        $pro_user_first = $_POST['user-first'];
-        $pro_user_last = $_POST['user-last'];
+        $pro_user_name = escape($_POST['user-name']);
+        $pro_user_email = escape($_POST['user-email']);
+        $pro_user_pass = escape($_POST['user-pass']);
+        $pro_user_first = escape($_POST['user-first']);
+        $pro_user_last = escape($_POST['user-last']);
         $pro_user_date = date('d-m-y');
         $pro_user_image = $_FILES['user-image']['name'];
         $pro_user_image_temp = $_FILES['user-image']['tmp_name'];
-        $pro_user_role = $_POST['user-role'];
-        $pro_user_status = $_POST['user-status'];
-            //Escape characters 
-        $pro_user_name = mysqli_real_escape_string($db, $pro_user_name );
-        $pro_user_email = mysqli_real_escape_string($db, $pro_user_email );
-        $pro_user_pass = mysqli_real_escape_string($db, $pro_user_pass );
-        $pro_user_first = mysqli_real_escape_string($db, $pro_user_first );
-        $pro_user_last = mysqli_real_escape_string($db, $pro_user_last );
+        $pro_user_role = escape($_POST['user-role']);
+        $pro_user_status = escape($_POST['user-status']);
             //Strip HTML or allow certain tags
         $pro_user_name = strip_tags( "$pro_user_name" );
         $pro_user_email = strip_tags( "$pro_user_email" );
         $pro_user_pass = strip_tags( "$pro_user_pass" );
         $pro_user_first = strip_tags( "$pro_user_first" );
         $pro_user_last = strip_tags( "$pro_user_last" );
+            //Hash password
+        $pro_user_pass = password_hash($pro_user_pass, PASSWORD_BCRYPT, array('cost' => 10));
         //Move images from tmp to perm folder
         move_uploaded_file($pro_user_image_temp, "../avatars/$pro_user_image");
         //Check if image was updated
