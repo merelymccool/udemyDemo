@@ -43,6 +43,8 @@
 
                     <?php 
                     if(isset($_SESSION['user_role'])){
+
+                        echo "<li><a href='./includes/logout.php'><i class='fa fa-fw fa-power-off'></i>Log Out</a></li>";
                         
                         } else {
                             echo "<li><a href='register.php'>Register</a></li>";
@@ -52,7 +54,7 @@
                     <?php 
                     if(isset($_SESSION['user_role'])){
                         if(isset($_GET['p_id'])){
-                            echo $p_id = $_GET['p_id'];
+                            echo $p_id = escape($_GET['p_id']);
                             echo "<li><a href='admin/posts.php?source=edit_post&p_id={$p_id}'>Edit</a></li>";
                         }
                     }

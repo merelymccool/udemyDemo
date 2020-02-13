@@ -20,7 +20,7 @@
 
     <?php 
     if(isset($_SESSION['user_role'])){
-        $name = $_SESSION['user_first']; ?>
+        $name = escape($_SESSION['user_first']); ?>
 
     <div class="well">
         <h4>Welcome, <?php echo $name; ?></h4>

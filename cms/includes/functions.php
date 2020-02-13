@@ -1,5 +1,10 @@
 <?php 
 
+function escape($str){
+    global $db;
+    return mysqli_real_escape_string($db,trim($str));
+}
+
 //////// Displays all posts on index
 function showAllPosts() {
         //Make connection available outside of function
@@ -44,7 +49,7 @@ function showAuthorPosts() {
     global $db;
 
     if(isset($_GET['a_id'])){
-        $a_id = $_GET['a_id'];
+        $a_id = escape($_GET['a_id']);
         //Query for all post data
     $post_query = "SELECT * FROM post
                     WHERE post_author = '{$a_id}' 
@@ -87,7 +92,7 @@ function showCatPosts() {
     global $db;
         //Validate GET data is received
     if(isset($_GET['cat'])){
-        $post_cat_id = $_GET['cat'];
+        $post_cat_id = escape($_GET['cat']);
         //Query for all post data
     $post_query = "SELECT * FROM post 
                     WHERE post_cat_id = $post_cat_id
@@ -132,7 +137,7 @@ function showOnePost() {
     global $db;
         //Validate GET data is received
     if(isset($_GET['p_id'])){
-        $p_id = $_GET['p_id'];
+        $p_id = escape($_GET['p_id']);
     }
         //Query for all post data
     $post_query = "SELECT * FROM post WHERE post_id = {$p_id}";
@@ -173,7 +178,7 @@ function showSearchPosts() {
         //Validate POST data received
     if(isset($_POST['search'])){
         //Assign input to variable
-        $search_terms = $_POST['terms'];
+        $search_terms = escape($_POST['terms']);
         //Query for search terms in post_tags
         $search_query = "SELECT * FROM post 
                             WHERE post_tags LIKE '%$search_terms%'
