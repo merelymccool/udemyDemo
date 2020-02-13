@@ -8,7 +8,7 @@
     $postPerPage = '10';
     
     if(isset($_GET['page'])){
-        $page = $_GET['page'];
+        $page = escape($_GET['page']);
     } else {
         $page = '';
     }
@@ -69,14 +69,13 @@
 
         </div>
         <!-- /.row -->
-
         <hr>
 
         <ul class="pager">
         <!-- Pagination -->
         <?php 
-        for($i = 1;  $i == $count; $i++){
-            echo "<li><a href='posts.php?page={$i}'>{$i}</a></li>";
+        for($i = 1;  $i <= $count; $i++){
+            echo "<li><a href='index.php?page={$i}'>{$i}</a></li>";
         }
         ?>
         </ul>

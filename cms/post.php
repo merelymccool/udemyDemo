@@ -7,7 +7,7 @@
 <!-- Get comments data -->
 <?php
 if(isset($_GET['p_id'])){
-    $com_postid = $_GET['p_id'];
+    $com_postid = escape($_GET['p_id']);
 // Update comment count
 // $view_query = "UPDATE post SET post_view_count = post_view_count + 1 WHERE post_id = {$p_id}; ";
 // $view_result = mysqli_query($db,$view_query);
@@ -17,13 +17,9 @@ if(isset($_GET['p_id'])){
 
 if(isset($_POST['create_com'])){
 
-    $com_author = $_POST['com_author'];
-    $com_email = $_POST['com_email'];
-    $com_content = $_POST['com_content'];
-    //Escape characters
-    $com_author = mysqli_real_escape_string($db, $com_author );
-    $com_email = mysqli_real_escape_string($db, $com_email );
-    $com_content = mysqli_real_escape_string($db, $com_content );
+    $com_author = escape($_POST['com_author']);
+    $com_email = escape($_POST['com_email']);
+    $com_content = escape($_POST['com_content']);
 
     if(!empty($com_author) && !empty($com_email) && !empty($com_content)){
 
@@ -88,7 +84,7 @@ if(isset($_POST['create_com'])){
 
                 <?php 
                 
-                $com_postid = $_GET['p_id'];
+                $com_postid = escape($_GET['p_id']);
 
                 $get_com_query = "SELECT * FROM com 
                                     WHERE com_post_id = {$com_postid} 

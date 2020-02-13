@@ -3,13 +3,9 @@
 
 <?php 
 if(isset($_POST['register'])){
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-
-    $username = mysqli_real_escape_string($db,$username);
-    $email = mysqli_real_escape_string($db,$email);
-    $password = mysqli_real_escape_string($db,$password);
+    $username = escape($_POST['username']);
+    $email = escape($_POST['email']);
+    $password = escape($_POST['password']);
 
     $password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
 
