@@ -8,12 +8,12 @@
 <?php
 if(isset($_GET['p_id'])){
     $com_postid = $_GET['p_id'];
-
-$view_query = "UPDATE post SET post_view_count = post_view_count + 1 WHERE post_id = {$p_id}; ";
-$view_result = mysqli_query($db,$view_query);
-If(!$view_result){
-    die("Views not updated. " . mysqli_error($db));
-}
+// Update comment count
+// $view_query = "UPDATE post SET post_view_count = post_view_count + 1 WHERE post_id = {$p_id}; ";
+// $view_result = mysqli_query($db,$view_query);
+// If(!$view_result){
+//     die("Views not updated. " . mysqli_error($db));
+// }
 
 if(isset($_POST['create_com'])){
 

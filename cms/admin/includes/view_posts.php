@@ -122,9 +122,23 @@ if(isset($_POST['checkBoxArray'])){
                         }
             echo        "<td>{$adm_post_status}</td>
                         <td><img width='100' src='../images/{$adm_post_image}' alt={$adm_post_title}></td>
-                        <td>{$adm_post_tags}</td>
-                        <td>{$adm_post_comments}</td>
-                        <td>{$adm_post_date}</td>
+                        <td>{$adm_post_tags}</td>"; ?>
+            <?php 
+            
+            $comment_count_query = "SELECT * FROM com WHERE com_post_id = $adm_post_id ";
+            $comment_count = mysqli_query($db,$comment_count_query);
+            if(!$comment_count){
+                die("Comment query failed. " . mysqli_error($db));
+            }
+            $row = mysqli_fetch_array($comment_count);
+            $cp_id = $row['com_post_id'];
+            $com_total = mysqli_num_rows($comment_count);
+            ?>
+
+                        <td><?php echo $com_total; ?></td>
+
+
+            <?php echo  "<td>{$adm_post_date}</td>
                         <td>{$adm_post_views}</td>
                         <td><small><a onClick=\"javascript: return confirm('Are you sure you want to delete this post?'); \" href='./posts.php?delete={$adm_post_id}'>Delete</a></small>|<small><a href='./posts.php?source=edit_post&p_id={$adm_post_id}'>Edit</a></small>
                         <br><small><a href='./posts.php?approve={$adm_post_id}'>Approve</a></small>|<small><a href='./posts.php?unapprove={$adm_post_id}'>Unapprove</a></small></td>
