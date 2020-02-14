@@ -60,7 +60,13 @@
                 </h1>
 
                 <!-- Display all posts -->
-                <?php showAllPosts(); ?>
+                <?php 
+                
+                if($count < 1){
+                    echo "no posts";
+                } else {
+                showAllPosts();
+                } ?>
 
             </div>
 

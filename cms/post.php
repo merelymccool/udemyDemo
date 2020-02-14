@@ -8,12 +8,12 @@
 <?php
 if(isset($_GET['p_id'])){
     $com_postid = escape($_GET['p_id']);
-// Update comment count
-// $view_query = "UPDATE post SET post_view_count = post_view_count + 1 WHERE post_id = {$p_id}; ";
-// $view_result = mysqli_query($db,$view_query);
-// If(!$view_result){
-//     die("Views not updated. " . mysqli_error($db));
-// }
+// Update view count
+$view_query = "UPDATE post SET post_view_count = post_view_count + 1 WHERE post_id = {$com_postid}; ";
+$view_result = mysqli_query($db,$view_query);
+If(!$view_result){
+    die("Views not updated. " . mysqli_error($db));
+}
 
 if(isset($_POST['create_com'])){
 
@@ -58,6 +58,21 @@ if(isset($_POST['create_com'])){
                 <!-- Display post -->
                 <?php showOnePost(); ?>
 
+                <?php 
+                
+                $com_postid = escape($_GET['p_id']);
+                
+                    $count_query = "SELECT * FROM post WHERE post_id = $com_postid AND post_status = 'published'; ";
+                    $count_result = mysqli_query($db,$count_query);
+                    if(!$count_result){
+                        die("Count posts query failed. " . mysqli_error($db));
+                    }
+                    $count = mysqli_num_rows($count_result);
+
+                    if($count < 1) {
+                        // Do not display comment form
+                    } else { ?>
+
                 <!-- Comments Form -->
                 <div class="well">
                     <h4>Leave a Comment:</h4>
@@ -83,9 +98,6 @@ if(isset($_POST['create_com'])){
                 <!-- Posted Comments -->
 
                 <?php 
-                
-                $com_postid = escape($_GET['p_id']);
-
                 $get_com_query = "SELECT * FROM com 
                                     WHERE com_post_id = {$com_postid} 
                                     AND com_status = 'Public' 
@@ -112,7 +124,7 @@ if(isset($_POST['create_com'])){
                         <?php echo $com_content; ?>
                     </div>
                 </div>
-                <?php } } else {
+                <?php } } } else {
                     header("Location: ./index.php"); }
                     ?>
 

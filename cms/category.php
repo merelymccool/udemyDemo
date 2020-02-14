@@ -18,7 +18,23 @@
                     <small>posts by category</small>
                 </h1>
                 <!-- Display all category posts -->
-                <?php showCatPosts(); ?>
+                <?php 
+                if(isset($_GET['cat'])){
+                    $cat = escape($_GET['cat']);
+                
+                    $count_query = "SELECT * FROM post WHERE post_cat_id = $cat AND post_status = 'published'; ";
+                    $count_result = mysqli_query($db,$count_query);
+                    if(!$count_result){
+                        die("Count posts query failed. " . mysqli_error($db));
+                    }
+                    $count = mysqli_num_rows($count_result);
+                
+                    if($count < 1) {
+                        echo "No posts";
+                    } else {
+                        showCatPosts(); 
+                    }
+                } ?>
 
             </div>
 

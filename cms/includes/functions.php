@@ -138,15 +138,22 @@ function showOnePost() {
         //Validate GET data is received
     if(isset($_GET['p_id'])){
         $p_id = escape($_GET['p_id']);
-    }
-        //Query for all post data
-    $post_query = "SELECT * FROM post WHERE post_id = {$p_id}";
+
+        if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'Administrator'){
+            //Query for all post data
+            $post_query = "SELECT * FROM post WHERE post_id = {$p_id}";
+        } else {
+            echo "Oops! Nothing to see here. Return to <a href='./index.php'>Home</a>.";
+            //Query only published post data
+        $post_query = "SELECT * FROM post WHERE post_id = {$p_id} AND post_status = 'published';";
+        }
         //Validate query was successful
     $post_result = mysqli_query($db, $post_query);
     if(!$post_result){
         //Display as error message
         die("Query for posts failed. " . mysqli_error($db));
     }
+    
         //Dynamically populate navbar from DB
     while($row = mysqli_fetch_assoc($post_result)){
         $post_title = $row['post_title'];
@@ -165,7 +172,7 @@ function showOnePost() {
             <hr>
             <p><?php echo $post_content; ?></p>
             <hr>
-<?php }} ?>
+<?php }}} ?>
 
 
 
