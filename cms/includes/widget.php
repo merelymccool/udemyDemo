@@ -13,7 +13,7 @@
         while($row = mysqli_fetch_assoc($sb_com_result)){
             $sb_com_postid = $row['com_post_id'];
             $sb_com_content = $row['com_content'];    ?>
-    <li><a href='posts.php?p_id=<?php echo $sb_com_postid; ?>'><?php echo $sb_com_content; ?></a></li>
+    <li><a href='post.php?p_id=<?php echo $sb_com_postid; ?>'><?php echo $sb_com_content; ?></a></li>
     <?php } ?>
     </p>
 </div>
@@ -35,7 +35,7 @@
             $sb_post_title = $row['post_title'];
             $sb_post_author = $row['post_author'];
             $sb_post_date = $row['post_date'];    ?>
-    <li><a href='posts.php?p_id=<?php echo $sb_post_id; ?>'><?php echo $sb_post_title; ?></a> - by <?php echo $sb_post_author; ?> on <?php echo $sb_post_date; ?></li>
+    <li><a href='post.php?p_id=<?php echo $sb_post_id; ?>'><?php echo $sb_post_title; ?></a> - by <?php echo $sb_post_author; ?> on <?php echo $sb_post_date; ?></li>
     <?php } ?>
     </p>
 </div>

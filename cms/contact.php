@@ -14,17 +14,6 @@ if(isset($_POST['contact'])){
     $message = escape(wordwrap($_POST['message'], 70));
 
     mail($to, $subject, $message, $header);
-
-    if(!$subject || ){
-        die("Registration failed. " . mysqli_error($db) . '' . mysqli_errno($db));
-    }
-        $message = "Account created! <a href='./'>Click here to login.</a>";
-    } else {
-        $message = "Please complete all fields";
-    }
-} else {
-
-    $message = '';
 }
 ?>
 
