@@ -5,6 +5,29 @@ function escape($str){
     return mysqli_real_escape_string($db,trim($str));
 }
 
+function commonQuery($table) {
+    global $db;
+    $query = "SELECT * FROM $table";
+    $result_query = mysqli_query($db, $query);
+    if(!$result_query){
+        die("Users query failed. " . mysqli_error($db));
+    }
+    $count = mysqli_num_rows($result_query);
+    echo "<div class='huge'>{$count}</div>";
+}
+
+function queryWhere($table,$column,$value) {
+    global $db;
+    $query = "SELECT * FROM $table WHERE $column = '$value'; ";
+    $result = mysqli_query($db, $query);
+    if(!$result){
+        die("Query query failed. " . mysqli_error($db));
+    }
+    $count = mysqli_num_rows($result);
+
+    return $count;
+}
+
 
 ////////// Category Page functions
 

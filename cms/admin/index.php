@@ -11,33 +11,33 @@
 
             <?php 
                     // Count Draft Posts
-            $post_draft_query = "SELECT * FROM post WHERE post_status = 'draft'; ";
-            $post_drafts = mysqli_query($db, $post_draft_query);
-            if(!$post_drafts){
-                die("Posts drafts query failed. " . mysqli_error($db));
-            }
-            $post_draft_count = mysqli_num_rows($post_drafts);
-                    // Count Published Posts
-            $post_pub_query = "SELECT * FROM post WHERE post_status = 'published'; ";
-            $post_pubs = mysqli_query($db, $post_pub_query);
-            if(!$post_pubs){
-                die("Posts published query failed. " . mysqli_error($db));
-            }
-            $post_pub_count = mysqli_num_rows($post_pubs);
-                    // Count Unapproved Comments
-            $com_unapp_query = "SELECT * FROM com WHERE com_status = 'Moderated'; ";
-            $com_unapps = mysqli_query($db, $com_unapp_query);
-            if(!$com_unapps){
-                die("Comments unapproved query failed. " . mysqli_error($db));
-            }
-            $com_unapp_count = mysqli_num_rows($com_unapps);
-                    // Count Approved Comments
-            $com_app_query = "SELECT * FROM com WHERE com_status = 'Public'; ";
-            $com_apps = mysqli_query($db, $com_app_query);
-            if(!$com_apps){
-                die("Comments approved query failed. " . mysqli_error($db));
-            }
-            $com_app_count = mysqli_num_rows($com_apps);
+            // $post_draft_query = "SELECT * FROM post WHERE post_status = 'draft'; ";
+            // $post_drafts = mysqli_query($db, $post_draft_query);
+            // if(!$post_drafts){
+            //     die("Posts drafts query failed. " . mysqli_error($db));
+            // }
+            // $post_draft_count = mysqli_num_rows($post_drafts);
+            //         // Count Published Posts
+            // $post_pub_query = "SELECT * FROM post WHERE post_status = 'published'; ";
+            // $post_pubs = mysqli_query($db, $post_pub_query);
+            // if(!$post_pubs){
+            //     die("Posts published query failed. " . mysqli_error($db));
+            // }
+            // $post_pub_count = mysqli_num_rows($post_pubs);
+            //         // Count Unapproved Comments
+            // $com_unapp_query = "SELECT * FROM com WHERE com_status = 'Moderated'; ";
+            // $com_unapps = mysqli_query($db, $com_unapp_query);
+            // if(!$com_unapps){
+            //     die("Comments unapproved query failed. " . mysqli_error($db));
+            // }
+            // $com_unapp_count = mysqli_num_rows($com_unapps);
+            //         // Count Approved Comments
+            // $com_app_query = "SELECT * FROM com WHERE com_status = 'Public'; ";
+            // $com_apps = mysqli_query($db, $com_app_query);
+            // if(!$com_apps){
+            //     die("Comments approved query failed. " . mysqli_error($db));
+            // }
+            // $com_app_count = mysqli_num_rows($com_apps);
             ?>
 
                 <!-- Page Heading -->
@@ -58,14 +58,14 @@
                                     </div>
                                     <div class="col-xs-9 text-right">
                                         <?php 
-                                        
-                                        $post_query = "SELECT * FROM post";
-                                        $all_posts_query = mysqli_query($db, $post_query);
-                                        if(!$all_posts_query){
-                                            die("Posts query failed. " . mysqli_error($db));
-                                        }
-                                        $post_count = mysqli_num_rows($all_posts_query);
-                                        echo "<div class='huge'>{$post_count}</div>";
+                                        commonQuery('post');
+                                        // $post_query = "SELECT * FROM post";
+                                        // $all_posts_query = mysqli_query($db, $post_query);
+                                        // if(!$all_posts_query){
+                                        //     die("Posts query failed. " . mysqli_error($db));
+                                        // }
+                                        // $post_count = mysqli_num_rows($all_posts_query);
+                                        // echo "<div class='huge'>{$post_count}</div>";
                                         ?>
                                         <div>Posts</div>
                                     </div>
@@ -89,14 +89,14 @@
                                     </div>
                                     <div class="col-xs-9 text-right">
                                     <?php 
-                                        
-                                        $com_query = "SELECT * FROM com";
-                                        $all_com_query = mysqli_query($db, $com_query);
-                                        if(!$all_com_query){
-                                            die("Comments query failed. " . mysqli_error($db));
-                                        }
-                                        $com_count = mysqli_num_rows($all_com_query);
-                                        echo "<div class='huge'>{$com_count}</div>";
+                                        commonQuery('com');
+                                        // $com_query = "SELECT * FROM com";
+                                        // $all_com_query = mysqli_query($db, $com_query);
+                                        // if(!$all_com_query){
+                                        //     die("Comments query failed. " . mysqli_error($db));
+                                        // }
+                                        // $com_count = mysqli_num_rows($all_com_query);
+                                        // echo "<div class='huge'>{$com_count}</div>";
                                         ?>
                                     <div>Comments</div>
                                     </div>
@@ -120,14 +120,14 @@
                                     </div>
                                     <div class="col-xs-9 text-right">
                                     <?php 
-                                        
-                                        $user_query = "SELECT * FROM user";
-                                        $all_user_query = mysqli_query($db, $user_query);
-                                        if(!$all_user_query){
-                                            die("Users query failed. " . mysqli_error($db));
-                                        }
-                                        $user_count = mysqli_num_rows($all_user_query);
-                                        echo "<div class='huge'>{$user_count}</div>";
+                                        commonQuery('user');
+                                        // $user_query = "SELECT * FROM user";
+                                        // $all_user_query = mysqli_query($db, $user_query);
+                                        // if(!$all_user_query){
+                                        //     die("Users query failed. " . mysqli_error($db));
+                                        // }
+                                        // $user_count = mysqli_num_rows($all_user_query);
+                                        // echo "<div class='huge'>{$user_count}</div>";
                                         ?>
                                         <div> Users</div>
                                     </div>
@@ -151,14 +151,14 @@
                                     </div>
                                     <div class="col-xs-9 text-right">
                                     <?php 
-                                        
-                                        $cat_query = "SELECT * FROM cat";
-                                        $all_cat_query = mysqli_query($db, $cat_query);
-                                        if(!$all_cat_query){
-                                            die("Categories query failed. " . mysqli_error($db));
-                                        }
-                                        $cat_count = mysqli_num_rows($all_cat_query);
-                                        echo "<div class='huge'>{$cat_count}</div>";
+                                        commonQuery('cat');
+                                        // $cat_query = "SELECT * FROM cat";
+                                        // $all_cat_query = mysqli_query($db, $cat_query);
+                                        // if(!$all_cat_query){
+                                        //     die("Categories query failed. " . mysqli_error($db));
+                                        // }
+                                        // $cat_count = mysqli_num_rows($all_cat_query);
+                                        // echo "<div class='huge'>{$cat_count}</div>";
                                         ?>
                                         <div>Categories</div>
                                     </div>
@@ -186,9 +186,20 @@
                                         ['Data', 'Count'],
 
                                         <?php 
+
+                                        $post_count = commonQuery('post');
+                                        $post_pub_count = queryWhere('post','post_status','published');
+                                        $post_draft_count = queryWhere('post','post_status','draft');
+                                        $com_count = commonQuery('com');
+                                        $com_app_count = queryWhere('com','com_status','Public');
+                                        $com_unapp_count = queryWhere('com','com_status','Unapproved');
+                                        $user_count = commonQuery('user');
+                                        $cat_count = commonQuery('cat');
+                                    
+
                                         
                                         $chart_titles = ['All Posts','Published Posts','Draft Posts','All Comments','Approved','Unapproved','Users','Categories'];
-                                        $chart_counts = [$post_count,$post_pub_count,$post_draft_count,$com_count,$com_app_count,$com_unapp_count,$user_count,$cat_count];
+                                        $chart_counts = [$post_count,$com_count,$user_count,$cat_count];
                                         
                                         for( $i=0 ; $i<8 ; $i++ ){
                                             echo "['{$chart_titles[$i]}'" . " , " . "{$chart_counts[$i]}],";

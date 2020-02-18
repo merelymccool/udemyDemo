@@ -77,6 +77,8 @@ if(isset($_POST['checkBoxArray'])){
     <tbody>
         <?php 
         //Query for all posts data
+
+        //TODO refactor with LEFT JOIN
         $adm_post_query = "SELECT * FROM post ORDER BY post_id DESC";
         //Validate query was successful
         $adm_post_result = mysqli_query($db, $adm_post_query);
