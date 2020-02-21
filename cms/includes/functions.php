@@ -1,10 +1,5 @@
 <?php 
 
-function escape($str){
-    global $db;
-    return mysqli_real_escape_string($db,trim($str));
-}
-
 //////// Displays all posts on index
 function showAllPosts() {
         //Make connection available outside of function

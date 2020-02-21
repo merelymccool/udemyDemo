@@ -1,3 +1,5 @@
+<?php include "./admin/includes/functions.php" ?>
+
 <!-- Blog Sidebar Widgets Column -->
 <div class="col-md-4">
 
@@ -43,6 +45,9 @@
             <span class="input-group-btn">
                 <button class="btn btn-primary" name="login" type="submit">Login</button>
             </span>
+        </div>
+        <div class="form-group">
+            <a href="forgot.php?forgot=<?php echo uniqid(); ?>">Forgot Password?</a>
         </div>
         </form>
         <!-- /.input-group -->

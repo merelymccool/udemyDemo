@@ -19,6 +19,10 @@ if(isset($_POST['register'])){
 
     // $password = crypt($password,$salt);
 
+
+    //TODO count username rows, if > 0, message
+    //TODO count email rows, if >0, message
+
     if(!empty($username) && !empty($email) && !empty($password)){
     $create_user_query = "INSERT INTO user (user_name,user_email,user_pass,user_role,user_status,user_date) 
                             VALUES('$username','$email','$password','Registered','Active',now()); ";

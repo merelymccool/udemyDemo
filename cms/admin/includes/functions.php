@@ -5,6 +5,32 @@ function escape($str){
     return mysqli_real_escape_string($db,trim($str));
 }
 
+function redirect($location){
+    header("Location: " . $location);
+    exit;
+}
+
+function ifItIsMethod($method=null){
+    if($_SERVER['REQUEST_METHOD'] == strtoupper($method)){
+        return true;
+    }
+    return false;
+}
+
+function isLoggedIn(){
+    if(isset($_SESSION['user_role'])){
+        return true;
+    }
+    return false;
+}
+
+function checkLoggedInAndRedirect($redirectLocation){
+
+    if(isLoggedIn()){
+        redirect($redirectLocation);
+    }
+}
+
 function commonQuery($table) {
     global $db;
     $query = "SELECT * FROM $table";
@@ -26,6 +52,67 @@ function queryWhere($table,$column,$value) {
     $count = mysqli_num_rows($result);
 
     return $count;
+}
+
+function loginUser($username,$password){
+    global $db;
+
+    if(isset($_POST['login'])){
+        $username = escape($_POST['username']);
+        $password = escape($_POST['password']);
+    
+        $check_login_query = "SELECT * FROM user WHERE user_name = '{$username}'; ";
+        $select_user = mysqli_query($db, $check_login_query);
+        if(!$select_user){
+            die("Username not found " . mysqli_error($db));
+        }
+    
+        while($row = mysqli_fetch_array($select_user)){
+            $user_id = $row['user_id'];
+            $user_name = $row['user_name'];
+            $user_pass = $row['user_pass'];
+            $user_first = $row['user_first'];
+            $user_last = $row['user_last'];
+            $user_email = $row['user_email'];
+            $user_image = $row['user_image'];
+            $user_role = $row['user_role'];
+            $user_status = $row['user_status'];
+
+            if(password_verify($password, $user_pass)){
+    
+                $_SESSION['user_id'] = $user_id;
+                $_SESSION['user_name'] = $user_name;
+                $_SESSION['user_pass'] = $user_pass;
+                $_SESSION['user_first'] = $user_first;
+                $_SESSION['user_last'] = $user_last;
+                $_SESSION['user_email'] = $user_email;
+                $_SESSION['user_image'] = $user_image;
+                $_SESSION['user_role'] = $user_role;
+                $_SESSION['user_status'] = $user_status;
+        
+            }
+        }
+    
+    }
+}
+
+function emailExists($email){
+    global $db;
+
+    $query = "SELECT user_email FROM user WHERE user_email = '{$email}';";
+    $result = mysqli_query($db,$query);
+    if(!$result){
+        die("Query failed. " . mysqli_error($db));
+    }
+    if(mysqli_num_rows($result) > 0){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function forgotPassword(){
+
 }
 
 
