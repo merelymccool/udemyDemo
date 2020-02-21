@@ -1,0 +1,6 @@
+{
+    "name": "admin/udemy-demo",
+    "require": {
+        "phpmailer/phpmailer": "^6.1"
+    }
+}
