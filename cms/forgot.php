@@ -12,12 +12,13 @@ use phpmailer\phpmailer\PHPMailer;
 // Load Composer's autoloader
 require '../vendor/autoload.php';
 require 'classes/config.php';
+require '../vendor/phpmailer/phpmailer/src/PHPMailer.php';
 ?>
 
 
 <?php 
 
-if(!ifItIsMethod('get') && !isset($_GET['forgot'])){
+if(!isset($_GET['forgot'])){
     redirect('index.php');
 }
 
@@ -45,11 +46,11 @@ if(ifItIsMethod('post')){
 
             $mail->setFrom('admin@merelymccool.ca', 'Mia');
             $mail->addAddress($email);     // Add a recipient
-            $mail->Subject = 'Here is the subject';
-            $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+            $mail->Subject = 'CMS Password Reset';
+            $mail->Body    = '<a href="http://localhost:80/udemyDemo/cms/reset.php?e='.$email.'&t='.$token.'"><b>Reset Your Password</b></a>';
 
             if($mail->send()){
-                echo "It worked!";
+                $emailSent = true;
             } else {
                 echo "you dun fucked up";
             }
@@ -75,14 +76,12 @@ if(ifItIsMethod('post')){
                     <div class="panel-body">
                         <div class="text-center">
 
+                        <?php if(!isset($emailSent)): ?>
 
                                 <h3><i class="fa fa-lock fa-4x"></i></h3>
                                 <h2 class="text-center">Forgot Password?</h2>
                                 <p>You can reset your password here.</p>
                                 <div class="panel-body">
-
-
-
 
                                     <form id="register-form" role="form" autocomplete="off" class="form" method="post">
 
@@ -100,6 +99,12 @@ if(ifItIsMethod('post')){
                                     </form>
 
                                 </div><!-- Body-->
+
+                        <?php else: ?>
+                                
+                            <h2>Email sent! Check your inbox.</h2>
+
+                        <?php endIf; ?>
 
                         </div>
                     </div>
