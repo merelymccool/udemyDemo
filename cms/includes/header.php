@@ -1,7 +1,7 @@
 <!-- Connect to DB -->
 <?php include "db.php"; ?>
 <!-- Call functions -->
-<?php include "functions.php"; ?>
+<?php include "./admin/includes/functions.php"; ?>
 <?php session_start(); ?>
 
 <!-- Turn on output buffering -->
