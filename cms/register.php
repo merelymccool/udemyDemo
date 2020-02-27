@@ -2,35 +2,33 @@
 <?php  include "includes/header.php"; ?>
 
 <?php 
+
+checkLoggedInAndRedirect('index.php');
+
+
 if(isset($_POST['register'])){
     $username = escape($_POST['username']);
     $email = escape($_POST['email']);
     $password = escape($_POST['password']);
 
+    if(!empty($password)){
     $password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
+    }
 
-    // $salt_query = "SELECT randSalt FROM user; ";
-    // $salt_result = mysqli_query($db,$salt_query);
-    // if(!$salt_result){
-    //     die("No salt for you. " . mysqli_error($db));
-    // }
-    // $row = mysqli_fetch_array($salt_result);
-    // $salt = $row['randSalt'];
-
-    // $password = crypt($password,$salt);
-
-
-    //TODO count username rows, if > 0, message
-    //TODO count email rows, if >0, message
-
-    if(!empty($username) && !empty($email) && !empty($password)){
+    if(usernameExists($username)){
+        $message = "This username already exists. <a href='login.php'>Login instead</a>?";
+    } 
+    elseif(emailExists($email)){
+        $message = "This email already exists. <a href='login.php'>Login instead</a>?";
+    } 
+    elseif(!empty($username) && !empty($email) && !empty($password)){
     $create_user_query = "INSERT INTO user (user_name,user_email,user_pass,user_role,user_status,user_date) 
                             VALUES('$username','$email','$password','Registered','Active',now()); ";
     $create_user_result = mysqli_query($db,$create_user_query);
     if(!$create_user_result){
         die("Registration failed. " . mysqli_error($db) . '' . mysqli_errno($db));
     }
-        $message = "Account created! <a href='./'>Click here to login.</a>";
+        $message = "Account created! <a href='login.php'>Click here to login.</a>";
     } else {
         $message = "Please complete all fields";
     }
@@ -38,6 +36,7 @@ if(isset($_POST['register'])){
 
     $message = '';
 }
+
 ?>
 
     <!-- Navigation -->

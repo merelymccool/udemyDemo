@@ -9,37 +9,6 @@
         <div id="page-wrapper">
             <div class="container-fluid">
 
-            <?php 
-                    // Count Draft Posts
-            // $post_draft_query = "SELECT * FROM post WHERE post_status = 'draft'; ";
-            // $post_drafts = mysqli_query($db, $post_draft_query);
-            // if(!$post_drafts){
-            //     die("Posts drafts query failed. " . mysqli_error($db));
-            // }
-            // $post_draft_count = mysqli_num_rows($post_drafts);
-            //         // Count Published Posts
-            // $post_pub_query = "SELECT * FROM post WHERE post_status = 'published'; ";
-            // $post_pubs = mysqli_query($db, $post_pub_query);
-            // if(!$post_pubs){
-            //     die("Posts published query failed. " . mysqli_error($db));
-            // }
-            // $post_pub_count = mysqli_num_rows($post_pubs);
-            //         // Count Unapproved Comments
-            // $com_unapp_query = "SELECT * FROM com WHERE com_status = 'Moderated'; ";
-            // $com_unapps = mysqli_query($db, $com_unapp_query);
-            // if(!$com_unapps){
-            //     die("Comments unapproved query failed. " . mysqli_error($db));
-            // }
-            // $com_unapp_count = mysqli_num_rows($com_unapps);
-            //         // Count Approved Comments
-            // $com_app_query = "SELECT * FROM com WHERE com_status = 'Public'; ";
-            // $com_apps = mysqli_query($db, $com_app_query);
-            // if(!$com_apps){
-            //     die("Comments approved query failed. " . mysqli_error($db));
-            // }
-            // $com_app_count = mysqli_num_rows($com_apps);
-            ?>
-
                 <!-- Page Heading -->
 
                         <h1 class="page-header">
@@ -57,16 +26,7 @@
                                         <i class="fa fa-file-text fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <?php 
-                                        commonQuery('post');
-                                        // $post_query = "SELECT * FROM post";
-                                        // $all_posts_query = mysqli_query($db, $post_query);
-                                        // if(!$all_posts_query){
-                                        //     die("Posts query failed. " . mysqli_error($db));
-                                        // }
-                                        // $post_count = mysqli_num_rows($all_posts_query);
-                                        // echo "<div class='huge'>{$post_count}</div>";
-                                        ?>
+                                        <?php commonQuery('post'); ?>
                                         <div>Posts</div>
                                     </div>
                                 </div>
@@ -88,16 +48,7 @@
                                         <i class="fa fa-comments fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                    <?php 
-                                        commonQuery('com');
-                                        // $com_query = "SELECT * FROM com";
-                                        // $all_com_query = mysqli_query($db, $com_query);
-                                        // if(!$all_com_query){
-                                        //     die("Comments query failed. " . mysqli_error($db));
-                                        // }
-                                        // $com_count = mysqli_num_rows($all_com_query);
-                                        // echo "<div class='huge'>{$com_count}</div>";
-                                        ?>
+                                    <?php commonQuery('com'); ?>
                                     <div>Comments</div>
                                     </div>
                                 </div>
@@ -119,16 +70,7 @@
                                         <i class="fa fa-user fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                    <?php 
-                                        commonQuery('user');
-                                        // $user_query = "SELECT * FROM user";
-                                        // $all_user_query = mysqli_query($db, $user_query);
-                                        // if(!$all_user_query){
-                                        //     die("Users query failed. " . mysqli_error($db));
-                                        // }
-                                        // $user_count = mysqli_num_rows($all_user_query);
-                                        // echo "<div class='huge'>{$user_count}</div>";
-                                        ?>
+                                    <?php commonQuery('user'); ?>
                                         <div> Users</div>
                                     </div>
                                 </div>
@@ -150,16 +92,7 @@
                                         <i class="fa fa-list fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                    <?php 
-                                        commonQuery('cat');
-                                        // $cat_query = "SELECT * FROM cat";
-                                        // $all_cat_query = mysqli_query($db, $cat_query);
-                                        // if(!$all_cat_query){
-                                        //     die("Categories query failed. " . mysqli_error($db));
-                                        // }
-                                        // $cat_count = mysqli_num_rows($all_cat_query);
-                                        // echo "<div class='huge'>{$cat_count}</div>";
-                                        ?>
+                                    <?php commonQuery('cat'); ?>
                                         <div>Categories</div>
                                     </div>
                                 </div>

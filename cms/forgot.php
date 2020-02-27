@@ -17,6 +17,8 @@ require '../vendor/phpmailer/phpmailer/src/PHPMailer.php';
 
 <?php 
 
+checkLoggedInAndRedirect('index.php');
+
 if(!isset($_GET['forgot'])){
     redirect('index.php');
 }
@@ -51,15 +53,12 @@ if(ifItIsMethod('post')){
             if($mail->send()){
                 $emailSent = true;
             } else {
-                echo "you dun fucked up";
+                echo "Email was not sent";
             }
-
+        }
         }
     }
-
-    }
 }
-
 ?>
 
 
@@ -103,7 +102,7 @@ if(ifItIsMethod('post')){
                                 
                             <h2>Email sent! Check your inbox.</h2>
 
-                        <?php endIf; ?>
+                        <?php endif; ?>
 
                         </div>
                     </div>

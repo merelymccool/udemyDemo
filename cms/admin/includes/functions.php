@@ -1,5 +1,7 @@
 <?php
-
+// =======================================
+// GENERAL HELPER FUNCTIONS
+// =======================================
 function escape($str){
     global $db;
     return mysqli_real_escape_string($db,trim($str));
@@ -96,6 +98,21 @@ function loginUser($username,$password){
     }
 }
 
+function usernameExists($username){
+    global $db;
+
+    $query = "SELECT user_name FROM user WHERE user_name = '{$username}';";
+    $result = mysqli_query($db,$query);
+    if(!$result){
+        die("Query failed. " . mysqli_error($db));
+    }
+    if(mysqli_num_rows($result) > 0){
+        return true;
+    } else {
+        return false;
+    }
+}
+
 function emailExists($email){
     global $db;
 
@@ -111,9 +128,6 @@ function emailExists($email){
     }
 }
 
-function forgotPassword(){
-
-}
 
 
 ////////// Category Page functions
